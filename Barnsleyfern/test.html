@@ -1,0 +1,54 @@
+<div>
+    <div class="row">
+        <label class="control-label col-xs-2">示例选择</label>
+        <select ng-options="v.value as v.title for v in configList" class="col-xs-3" ng-model="params.exampleSel" ng-change="demoSelectionChanged()"></select>
+    </div>
+    <div class="row">
+        <table>
+            <thead>
+            <tr>
+                <th>a</th>
+                <th>b</th>
+                <th>c</th>
+                <th>d</th>
+                <th>e</th>
+                <th>f</th>
+                <th></th>
+                <th>p</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="r in demoData">
+                <td>
+                    <input type="text" disabled="disabled" style="width: 65px;" value="{{r[0]}}">
+                </td>
+                <td>
+                    <input type="text" disabled="disabled" style="width: 65px;" value="{{r[1]}}">
+                </td>
+                <td>
+                    <input type="text" disabled="disabled" style="width: 65px;" value="{{r[2]}}">
+                </td>
+                <td>
+                    <input type="text" disabled="disabled" style="width: 65px;" value="{{r[3]}}">
+                </td>
+                <td>
+                    <input type="text" disabled="disabled" style="width: 65px;" value="{{r[4]}}">
+                </td>
+                <td>
+                    <input type="text" disabled="disabled" style="width: 65px;" value="{{r[5]}}">
+                </td>
+                <td>
+                    <input type="text" disabled="disabled" style="width: 65px;">
+                </td>
+                <td>
+                    <input type="text" disabled="disabled" style="width: 65px;" value="{{r[6]}}">
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <button class="btn btn-success" ng-click="drawSystem()">绘图</button>
+    </div>
+</div>

@@ -18,7 +18,7 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
     $scope.testList = [1,2,3,4,5];
 
     $scope.params = {
-        r:2.0,
+        r:4.0,
         x1start:0.2,
         x2start:0.2,
         iter_count:200,
