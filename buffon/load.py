@@ -6,7 +6,7 @@ import _pybridge
 import matplotlib.pyplot as pl
 from matplotlib import collections
 import numpy
-class L_System(object):
+class Buffon(object):
     def __init__(self, rule):
         info = rule['S']
         for i in range(rule['iter']):
@@ -43,20 +43,20 @@ class L_System(object):
                 del stack[-1]
         return lines
     @staticmethod
-    def get_Barnsley_lines(paramsMatrix):
+    def get_Barnsley_lines():
         lines = []
         p = (0.0, 0.0)
         l = 1.0
         for i in range(100000):
             rnd = numpy.random.random()
-            if rnd < paramsMatrix[0,6]:
-                t = paramsMatrix[0,0]*p[0]+paramsMatrix[0,1]*p[1]+paramsMatrix[0,4],paramsMatrix[0,2]*p[0]+paramsMatrix[0,3]*p[1]+paramsMatrix[0,5]
-            elif rnd < paramsMatrix[0,6]+paramsMatrix[1,6]:
-                t = paramsMatrix[1,0]*p[0]+paramsMatrix[1,1]*p[1]+paramsMatrix[1,4],paramsMatrix[1,2]*p[0]+paramsMatrix[1,3]*p[1]+paramsMatrix[1,5]
-            elif rnd < paramsMatrix[0,6]+paramsMatrix[1,6]+paramsMatrix[2,6]:
-                t = paramsMatrix[2,0]*p[0]+paramsMatrix[2,1]*p[1]+paramsMatrix[2,4],paramsMatrix[2,2]*p[0]+paramsMatrix[2,3]*p[1]+paramsMatrix[2,5]
+            if rnd < 0.01:
+                t = 0,0.16*p[1]
+            elif rnd < 0.86:
+                t = 0.85*p[0]+0.04*p[1],-0.04*p[0]+0.85*p[1]+1.6
+            elif rnd < 0.93:
+                t = 0.2*p[0]-0.26*p[1],0.23*p[0]+0.22*p[1]+1.6
             else:
-                t = paramsMatrix[3,0]*p[0]+paramsMatrix[3,1]*p[1]+paramsMatrix[3,4],paramsMatrix[3,2]*p[0]+paramsMatrix[3,3]*p[1]+paramsMatrix[3,5]
+                t = -0.15*p[0]+0.28*p[1],0.26*p[0]+0.24*p[1]+0.44
             lines.append((t[0], t[1]))
             p = t
         return lines
@@ -104,9 +104,7 @@ rules = [
         "title":"Sierpinski"
     },
 ]
-def draw(ax, rule, iter=None):
-    if iter!=None:
-        rule["iter"] = iter
+def draw(ax):
     lines = L_System(rule).get_lines()
     linecollections = collections.LineCollection(lines)
     ax.add_collection(linecollections, autolim=True)
@@ -114,8 +112,8 @@ def draw(ax, rule, iter=None):
     ax.set_axis_off()
     ax.set_xlim(ax.dataLim.xmin, ax.dataLim.xmax)
     ax.invert_yaxis()
-def draw_Barnsley(ax,paramsMatrix):
-    lines = L_System.get_Barnsley_lines(paramsMatrix)
+def draw_Barnsley(ax):
+    lines = L_System.get_Barnsley_lines()
     (x, y) = zip(*lines)
     ax.scatter(x,y,marker=',',lw=0, s=1,c='g')
     #ax.axis("equal")
@@ -123,18 +121,12 @@ def draw_Barnsley(ax,paramsMatrix):
     #ax.set_xlim(ax.dataLim.xmin, ax.dataLim.xmax)
     #ax.invert_yaxis()
 
-def LSystem_draw_Barnsley(data):
-    params = data['params']
-    paramsMatrix = numpy.asarray(params)
-    slim = data['slim']
-
+def Buffon_draw(data):
+    rule = data['rule']
     fig = pl.gcf()
     fig.patch.set_facecolor("w")
     DPI = fig.get_dpi()
-    if slim:
-        fig.set_size_inches(300.0 / float(DPI), 600.0 / float(DPI))
-    else:
-        fig.set_size_inches(1000.0/float(DPI),600.0/float(DPI))
+    fig.set_size_inches(1200.0/float(DPI),800.0/float(DPI))
 
     #for i in xrange(6):
     #    ax = fig.add_subplot(241+i)
@@ -144,13 +136,13 @@ def LSystem_draw_Barnsley(data):
     #fig.add_subplot(247)
     pl.axis('off')
     ax = fig.add_subplot(111)
-    #draw(ax,rules[rule])
-    draw_Barnsley(ax,paramsMatrix)
+    draw(ax)
+    #draw_Barnsley(ax)
     fig.subplots_adjust(left=0,right=1,bottom=0,top=1,wspace=0,hspace=0)
     #pl.show()
     fig.canvas.draw()
     _pybridge.PyRendererAggBufferRGBA(fig.canvas.get_renderer()._renderer)
     fig.clf()
 
-PyBridge.registerHandler("LSystem_draw_Barnsley", LSystem_draw_Barnsley)
+PyBridge.registerHandler("LSystem_draw", Buffon_draw)
 

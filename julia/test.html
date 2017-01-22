@@ -1,0 +1,29 @@
+<div>
+    <div class="row">
+        <label class="control-label col-xs-2">绘图区间</label>
+        <select ng-options="v for v in rangeSelList" ng-model="params.rangeSel" class="col-xs-3 col-md-3" ng-change="rangeSelChange()"></select>
+        <table class="col-md-6 col-xs-6 col-xs-offset-1 col-md-offset-1">
+            <tr>
+                <th>x</th>
+                <td>({{params.x_min}}</td>
+                <td style="color: red;">,</td>
+                <td>{{params.x_max}})</td>
+                <th>y</th>
+                <td>({{params.y_min}}</td>
+                <td style="color: red;">,</td>
+                <td>{{params.y_max}})</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <label class="control-label col-md-2 col-xs-2" for="presetSel">设置</label>
+            <select id="presetSel" ng-options="v.value as v.title for v in presetList" ng-model="params.presetSel" class="col-md-3 col-xs-3"></select>
+        </div>
+    </div>
+    <div class="row">
+        <button class="btn btn-success" ng-click="start()">开始</button>
+        <button class="btn btn-success" ng-click="stop()">停止</button>
+    </div>
+</div>

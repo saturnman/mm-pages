@@ -1,0 +1,23 @@
+<div>
+    <div class="row">
+        <button class="btn btn-warning pull-right" ng-click="reload()">Reload</button>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <label class="control-label col-md-2 col-xs-2" for="exampleSel">测试设置</label>
+            <select id="exampleSel" ng-options="v.value as v.title for v in configList" ng-model="params.exampleSel" class="col-md-3 col-xs-3"></select>
+        </div>
+    </div>
+    <div class="row">
+<pre>
+初始:S
+规则:{{ruleDespList[params.exampleSel].rule}}
+迭代次数:{{ruleDespList[params.exampleSel].iter}}
+绘图方向:{{ruleDespList[params.exampleSel].angle}}
+转角:{{ruleDespList[params.exampleSel].angle}}</pre>
+
+    </div>
+    <div class="row">
+        <button class="btn btn-success" ng-click="drawSystem()">绘图</button>
+    </div>
+</div>
