@@ -1,113 +1,76 @@
 # -*- coding: utf-8 -*-
 from math import sin, cos, pi
 import matplotlib
+import matplotlib.patches as mpatches
 matplotlib.use("agg")
 import _pybridge
 import matplotlib.pyplot as pl
 from matplotlib import collections
 import numpy
-class Buffon(object):
-    def __init__(self, rule):
-        info = rule['S']
-        for i in range(rule['iter']):
-            ninfo = []
-            for c in info:
-                if c in rule:
-                    ninfo.append(rule[c])
-                else:
-                    ninfo.append(c)
-            info = "".join(ninfo)
-        self.rule = rule
-        self.info = info
-    def get_lines(self):
-        d = self.rule['direct']
-        a = self.rule['angle']
-        p = (0.0, 0.0)
-        l = 1.0
-        lines = []
-        stack = []
-        for c in self.info:
-            if c in "Ff":
-                r = d * pi / 180
-                t = p[0] + l*cos(r), p[1] + l*sin(r)
-                lines.append(((p[0], p[1]), (t[0], t[1])))
-                p = t
-            elif c == "+":
-                d += a
-            elif c == "-":
-                d -= a
-            elif c == "[":
-                stack.append((p,d))
-            elif c == "]":
-                p, d = stack[-1]
-                del stack[-1]
-        return lines
+
+
+class Buffon:
+    needleList = []
+    lineSpace = 50
+    numCross = 0
+    piEstimationValList = []
+    numNeedleList = []
+    lineList = []
+    needleLength = 30
+    world = (500,500)
+    numNeedle = 0
+    piEstimate = 0.0
+
     @staticmethod
-    def get_Barnsley_lines():
-        lines = []
-        p = (0.0, 0.0)
-        l = 1.0
-        for i in range(100000):
-            rnd = numpy.random.random()
-            if rnd < 0.01:
-                t = 0,0.16*p[1]
-            elif rnd < 0.86:
-                t = 0.85*p[0]+0.04*p[1],-0.04*p[0]+0.85*p[1]+1.6
-            elif rnd < 0.93:
-                t = 0.2*p[0]-0.26*p[1],0.23*p[0]+0.22*p[1]+1.6
-            else:
-                t = -0.15*p[0]+0.28*p[1],0.26*p[0]+0.24*p[1]+0.44
-            lines.append((t[0], t[1]))
-            p = t
-        return lines
-rules = [
-    {
-        "F":"F+F--F+F", "S":"F",
-        "direct":180,
-        "angle":60,
-        "iter":6,
-        "title":"Koch"
-    },
-    {
-        "X":"X+YF+", "Y":"-FX-Y", "S":"FX",
-        "direct":0,
-        "angle":90,
-        "iter":13,
-        "title":"Dragon"
-    },
-    {
-        "f":"F-f-F", "F":"f+F+f", "S":"f",
-        "direct":0,
-        "angle":60,
-        "iter":7,
-        "title":"Triangle"
-    },
-    {
-        "X":"F-[[X]+X]+F[+FX]-X", "F":"FF", "S":"X",
-        "direct":-45,
-        "angle":25,
-        "iter":6,
-        "title":"Plant"
-    },
-    {
-        "S":"X", "X":"-YF+XFX+FY-", "Y":"+XF-YFY-FX+",
-        "direct":0,
-        "angle":90,
-        "iter":6,
-        "title":"Hilbert"
-    },
-    {
-        "S":"L--F--L--F", "L":"+R-F-R+", "R":"-L+F+L-",
-        "direct":0,
-        "angle":45,
-        "iter":10,
-        "title":"Sierpinski"
-    },
-]
+    def setup():
+        Buffon.needleList = []
+        Buffon.lineSpace = 50
+        Buffon.needleLength = 30
+        Buffon.world = (500, 500)
+        Buffon.numCross = 0
+        Buffon.piEstimationValList = []
+        Buffon.piEstimate = 0.0
+        Buffon.numNeedleList = []
+        Buffon.numNeedle = 0
+        for i in range(11):
+            Buffon.lineList.append(((0,1+Buffon.lineSpace*i),(500,1+Buffon.lineSpace*i)))
+        print Buffon.lineList
+    @staticmethod
+    def step():
+        needleHalf = Buffon.needleLength/2.0
+        c = numpy.random.randint(20)
+        for i in range(c):
+            middle = 500*numpy.random.random(size=(2,))
+            rotation = numpy.math.pi*numpy.random.random()
+            p = middle[0]+needleHalf*numpy.math.cos(rotation),middle[1]+needleHalf*numpy.math.sin(rotation)
+            t = 2*middle-p
+            Buffon.needleList.append(((p[0],p[1]),(t[0],t[1])))
+            posY = (middle[0] % 50)
+            if posY > 25:
+                posY = 50-posY
+            if posY <= needleHalf*numpy.math.sin(rotation):
+                Buffon.numCross += 1
+        if Buffon.numCross != 0:
+            Buffon.piEstimate = float(2*Buffon.needleLength*Buffon.numNeedle)/(Buffon.lineSpace*Buffon.numCross)
+            Buffon.piEstimationValList.append(Buffon.piEstimate)
+        else:
+            Buffon.piEstimationValList.append(0)
+        Buffon.numNeedle += c
+        Buffon.numNeedleList.append(Buffon.numNeedle)
+
+    @staticmethod
+    def get_lines():
+        return Buffon.needleList
+
 def draw(ax):
-    lines = L_System(rule).get_lines()
+    lines = Buffon.get_lines()
     linecollections = collections.LineCollection(lines)
     ax.add_collection(linecollections, autolim=True)
+    spaceLineCol = collections.LineCollection(Buffon.lineList)
+    spaceLineCol.set_facecolor("r")
+    spaceLineCol.set_edgecolor("r")
+    ax.add_collection(linecollections,autolim=True)
+    ax.add_collection(spaceLineCol,autolim=True)
     ax.axis("equal")
     ax.set_axis_off()
     ax.set_xlim(ax.dataLim.xmin, ax.dataLim.xmax)
@@ -122,7 +85,6 @@ def draw_Barnsley(ax):
     #ax.invert_yaxis()
 
 def Buffon_draw(data):
-    rule = data['rule']
     fig = pl.gcf()
     fig.patch.set_facecolor("w")
     DPI = fig.get_dpi()
@@ -135,14 +97,27 @@ def Buffon_draw(data):
     #draw_Barnsley(ax)
     #fig.add_subplot(247)
     pl.axis('off')
-    ax = fig.add_subplot(111)
+    ax = fig.add_subplot(121)
     draw(ax)
+    ax2 = fig.add_subplot(122)
+    ax2.plot(Buffon.numNeedleList,Buffon.piEstimationValList)
+    ax2.set_axis_on()
+    desp_patch = mpatches.Patch(color='red',label="n needls:%d,pi=%f" %(Buffon.numNeedle,Buffon.piEstimationValList[-1]))
     #draw_Barnsley(ax)
+    ax2.legend(handles=[desp_patch])
     fig.subplots_adjust(left=0,right=1,bottom=0,top=1,wspace=0,hspace=0)
     #pl.show()
     fig.canvas.draw()
     _pybridge.PyRendererAggBufferRGBA(fig.canvas.get_renderer()._renderer)
     fig.clf()
 
-PyBridge.registerHandler("LSystem_draw", Buffon_draw)
+def Buffon_setup(data):
+    Buffon.setup()
+
+def Buffon_step(data):
+    Buffon.step()
+
+PyBridge.registerHandler("Buffon_step", Buffon_step)
+PyBridge.registerHandler("Buffon_draw", Buffon_draw)
+PyBridge.registerHandler("Buffon_setup", Buffon_setup)
 

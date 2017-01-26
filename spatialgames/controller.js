@@ -16,21 +16,30 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
         setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
     };
 
-    $scope.configList = [{title:"Koch",value:0},{title:"Dragon",value:1},{title:"Triangle",value:2},{title:"Plant",value:3},{title:"Hilbert",value:4},{title:"Sierpinski",value:5}];
-
     $scope.params = {
-        r:4.0,
+        b:1.0,
         x1start:0.2,
         x2start:0.2,
         iter_count:200,
         lines:1,
         exampleSel:1,
         speed:1,
-        ruleDesp:""
+        width:120,
+        height:120
+    };
+
+    $scope.setb = function () {
+        var data = {
+            'handlerName':'SpatialGame_setb',
+            'b':$scope.params.b
+        };
+        $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
+
+        });
     };
 
     $scope.start = function () {
-        $scope.slowProcessPainter.start(500,500,20);
+        $scope.slowProcessPainter.start(120,120);
     };
 
     $scope.stop = function () {
@@ -40,7 +49,7 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
     $scope.step = function () {
         var deferred = $.Deferred();
         var data = {
-            'handlerName':'Buffon_step'
+            'handlerName':'SpatialGame_step'
         };
         $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
             deferred.resolve();
@@ -50,17 +59,20 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
 
     $scope.draw = function () {
         var data = {
-            'handlerName':'Buffon_draw'
+            'handlerName':'SpatialGame_draw'
         };
         $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
             console.log("JS received response:", responseData);
         });
     };
 
-    $scope.setup = function () {
+    $scope.setup = function (width,height,temperature) {
         var deferred = $.Deferred();
         var data = {
-            'handlerName':'Buffon_setup'
+            'handlerName':'SpatialGame_setup',
+            width:width,
+            height:height,
+            temperature:temperature
         };
         $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
             console.log("JS received response:", responseData);
@@ -69,9 +81,10 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
         return deferred.promise();
     };
 
-    $scope.reload = function () {
-        window.location.reload();
+    $scope.changeSpeed = function () {
+        $scope.animation.changeSpeed();
     };
+
 
     $scope.init = function () {
         setupWebViewJavascriptBridge(function(bridge) {
@@ -88,7 +101,7 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
 
         $scope.slowProcessPainter = {
             stopped:true,
-            interval:200,
+            interval:500,
             counter:0,
             timer:null,
             data:{
@@ -108,12 +121,12 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
                 }
                 //console.log("run tick fn");
             },
-            start:function () {
+            start:function (width,height) {
                 if(this.stopped) {
                     //this.interval = ;
                     this.counter = 10000;
                     this.stopped = false;
-                    $scope.setup();
+                    $scope.setup(width,height);
                     this.timer = setInterval(this.step, this.interval);
                 }
             },
