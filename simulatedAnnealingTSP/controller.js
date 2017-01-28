@@ -39,7 +39,7 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
     $scope.config = function (command) {
         var deferred = $.Deferred();
         var data = {
-            'handlerName':'SpatialGame_config',
+            'handlerName':'SimulatedAnnealingTSP_config',
             'command':command
         };
         $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
@@ -51,7 +51,7 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
     $scope.patch = function (posX,posY,data) {
         var deferred = $.Deferred();
         var data = {
-            'handlerName':'SpatialGame_patch',
+            'handlerName':'SimulatedAnnealingTSP_patch',
             posX:posX,
             posY:posY,
             d:data
@@ -103,7 +103,7 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
 
     $scope.setb = function () {
         var data = {
-            'handlerName':'SpatialGame_setb',
+            'handlerName':'SimulatedAnnealingTSP_setb',
             'b':$scope.params.b
         };
         $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
@@ -122,7 +122,7 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
     $scope.asyncstep = function () {
         var deferred = $.Deferred();
         var data = {
-            'handlerName':'SpatialGame_asyncstep'
+            'handlerName':'SimulatedAnnealingTSP_asyncstep'
         };
         $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
             deferred.resolve();
@@ -133,7 +133,7 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
     $scope.step = function () {
         var deferred = $.Deferred();
         var data = {
-            'handlerName':'SpatialGame_step'
+            'handlerName':'SimulatedAnnealingTSP_step'
         };
         $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
             deferred.resolve();
@@ -142,21 +142,21 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
     };
 
     $scope.draw = function () {
-        var data = {
-            'handlerName':'SpatialGame_draw'
-        };
-        $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
-            console.log("JS received response:", responseData);
-        });
+
+            var data = {
+                'handlerName':'SimulatedAnnealingTSP_draw'
+            };
+            $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
+                console.log("JS received response:", responseData);
+            });
+        
+
     };
 
     $scope.setup = function (width,height,temperature) {
         var deferred = $.Deferred();
         var data = {
-            'handlerName':'SpatialGame_setup',
-            width:width,
-            height:height,
-            temperature:temperature
+            'handlerName':'SimulatedAnnealingTSP_setup'
         };
         $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
             console.log("JS received response:", responseData);
