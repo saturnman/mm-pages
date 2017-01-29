@@ -1,0 +1,32 @@
+<div>
+    <div class="row">
+        <button class="btn btn-warning pull-right" ng-click="reload()">刷新</button>
+    </div>
+    <div class="row">
+        <div class="col-xs-2">
+            <label class="control-label">反弹系数</label>
+        </div>
+        <div class="col-xs-3">
+            <select class="form-control" ng-options="v for v in bounceEffList" ng-model="params.b" ng-change="bounceEffChanged()"></select>
+        </div>
+        <div class="col-xs-2">
+            <label class="control-label">绘图参数</label>
+        </div>
+        <div class="col-xs-3">
+            <select  class="form-control" ng-options="v.value as v.name for v in drawParam" ng-change="drawParamChanged()" ng-model="params.drawParam"></select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2">
+            <label class="control-label" for="speed">计算速度</label>
+        </div>
+        <div class="col-xs-3">
+            <select id="speed" ng-options="v as v for v in [1,2,3,4]" ng-model="params.speed" class="form-control col-xs-3" ng-change="changeSpeed()"></select>
+        </div>
+    </div>
+    <div class="row">
+        <button class="btn btn-success" ng-click="start()">开始</button>
+        <button class="btn btn-success" ng-click="stop()">停止</button>
+        <button class="btn btn-success" ng-click="continue()">继续</button>
+    </div>
+</div>

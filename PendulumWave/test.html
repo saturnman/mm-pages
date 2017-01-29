@@ -2,18 +2,14 @@
     <div class="row">
         <button class="btn btn-warning pull-right" ng-click="reload()">Reload</button>
     </div>
+
     <div class="row">
         <div class="form-group">
-            <label class="control-label col-md-2 col-xs-2" for="speed">演化速度</label>
+            <label class="control-label col-md-2 col-xs-2" for="speed">演示速度</label>
             <select id="speed" ng-options="v as v for v in [1,2,3,4]" ng-model="params.speed" class="col-md-3 col-xs-3" ng-change="changeSpeed()"></select>
         </div>
     </div>
-    <div class="row">
-        <div class="form-group">
-            <label class="control-label col-md-2 col-xs-2" for="exampleSel">测试设置</label>
-            <select id="exampleSel" ng-options="v as v for v in [1,2,3,4]" ng-model="params.exampleSel" class="col-md-3 col-xs-3"></select>
-        </div>
-    </div>
+
     <div class="row">
         <button class="btn btn-success" ng-click="animate()">开始</button>
         <button class="btn btn-success" ng-click="continueAnimate()">继续</button>

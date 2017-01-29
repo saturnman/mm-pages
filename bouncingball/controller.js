@@ -16,8 +16,13 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
         setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
     };
 
+    $scope.reload = function () {
+        window.location.reload();
+    };
+
     $scope.params = {
-        b:1.0,
+        b:-0.99,
+        drawParam:'x',
         x1start:0.2,
         x2start:0.2,
         iter_count:200,
@@ -29,17 +34,41 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
         demoSelection:0
     };
 
-    $scope.demoList = [
-        {name:"随机分布博弈",value:0},
-        {name:"合作者入侵",value:1},
-        {name:"背叛者入侵",value:2},
-        {name:"异步更新合作者入侵",value:3}
+    $scope.bounceEffList = [
+        -0.99,-0.95,-0.9,-0.8
     ];
+
+    $scope.drawParam = [
+        {name:"位置",value:'x'},
+        {name:"速度",value:'v'}
+    ];
+
+    $scope.bounceEffChanged = function () {
+        $scope.setb($scope.params.b);
+    };
+
+    $scope.drawParamChanged = function () {
+        $scope.setDrawParam($scope.params.drawParam);
+    };
+
+
+
+    $scope.setDrawParam = function (drawParam) {
+        var deferred = $.Deferred();
+        var data = {
+            'handlerName':'BouncingBall_setDrawParam',
+            'drawParam':drawParam
+        };
+        $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
+            deferred.resolve();
+        });
+        return deferred.promise();
+    };
 
     $scope.config = function (command) {
         var deferred = $.Deferred();
         var data = {
-            'handlerName':'SimulatedAnnealingTSP_config',
+            'handlerName':'BouncingBall_config',
             'command':command
         };
         $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
@@ -48,19 +77,6 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
         return deferred.promise();
     };
 
-    $scope.patch = function (posX,posY,data) {
-        var deferred = $.Deferred();
-        var data = {
-            'handlerName':'SimulatedAnnealingTSP_patch',
-            posX:posX,
-            posY:posY,
-            d:data
-        };
-        $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
-            deferred.resolve();
-        });
-        return deferred.promise();
-    };
 
     $scope.demoSelectionChanged = function () {
         if($scope.params.demoSelection==0){
@@ -103,7 +119,7 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
 
     $scope.setb = function () {
         var data = {
-            'handlerName':'SimulatedAnnealingTSP_setb',
+            'handlerName':'BouncingBall_setb',
             'b':$scope.params.b
         };
         $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
@@ -112,28 +128,23 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
     };
 
     $scope.start = function () {
-        $scope.slowProcessPainter.start(120,120);
+        $scope.setup().then(function () {
+            $scope.slowProcessPainter.start();
+        });
     };
 
     $scope.stop = function () {
         $scope.slowProcessPainter.stop();
     };
 
-    $scope.asyncstep = function () {
-        var deferred = $.Deferred();
-        var data = {
-            'handlerName':'SimulatedAnnealingTSP_asyncstep'
-        };
-        $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
-            deferred.resolve();
-        });
-        return deferred.promise();
+    $scope.continue = function () {
+        $scope.slowProcessPainter.continue();
     };
 
     $scope.step = function () {
         var deferred = $.Deferred();
         var data = {
-            'handlerName':'SimulatedAnnealingTSP_step'
+            'handlerName':'BouncingBall_step'
         };
         $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
             deferred.resolve();
@@ -144,17 +155,17 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
     $scope.draw = function () {
 
         var data = {
-            'handlerName':'SimulatedAnnealingTSP_draw'
+            'handlerName':'BouncingBall_draw'
         };
         $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
             console.log("JS received response:", responseData);
         });
     };
 
-    $scope.setup = function (width,height,temperature) {
+    $scope.setup = function () {
         var deferred = $.Deferred();
         var data = {
-            'handlerName':'SimulatedAnnealingTSP_setup'
+            'handlerName':'BouncingBall_setup'
         };
         $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
             console.log("JS received response:", responseData);
@@ -164,7 +175,7 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
     };
 
     $scope.changeSpeed = function () {
-        $scope.animation.changeSpeed();
+        $scope.slowProcessPainter.changeSpeed();
     };
 
 
@@ -183,7 +194,8 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
 
         $scope.slowProcessPainter = {
             stopped:true,
-            interval:100,
+            interval:200,
+            initInterval:200,
             counter:0,
             async:false,
             timer:null,
@@ -196,31 +208,24 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
                     return;
                 }
                 this.counter -= 1;
-                if($scope.slowProcessPainter.async==true){
-                    $scope.asyncstep().then(function () {
-                        $scope.draw();
-                    });
-                }else {
-                    $scope.step().then(function () {
-                        $scope.draw();
-                    });
-                }
+                $scope.step().then(function () {
+                    $scope.draw();
+                });
                 if(this.counter==0){
                     this.stop();
                 }
                 //console.log("run tick fn");
             },
-            start:function (width,height) {
+            start:function () {
                 if(this.stopped) {
                     //this.interval = ;
-                    this.counter = 10000;
+                    this.counter = 5000;
                     this.stopped = false;
-                    $scope.setup(width,height);
+                    $scope.setup();
                     this.timer = setInterval(this.step, this.interval);
                 }
             },
             stop:function () {
-                console.log("in stop fn");
                 this.stopped = true;
                 this.counter = 0;
                 clearInterval(this.timer);
@@ -231,6 +236,12 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
                     this.stopped = false;
                     this.timer = setInterval(this.step, this.interval);
                 }
+            },
+            changeSpeed:function () {
+                clearInterval(this.timer);
+                this.timer = null;
+                this.interval = (this.initInterval/$scope.params.speed).toFixed(0);
+                this.timer = setInterval(this.step, this.interval);
             }
         };
     };

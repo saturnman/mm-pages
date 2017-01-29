@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Pendulum Wave</title>
+<title>BouncingBall</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11751,7 +11751,13 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="&#27874;&#25670;">&#27874;&#25670;<a class="anchor-link" href="#&#27874;&#25670;">&#182;</a></h1>
+<h1 id="&#24377;&#29699;&#27169;&#22411;(&#31034;&#20363;&#27169;&#22411;)">&#24377;&#29699;&#27169;&#22411;(&#31034;&#20363;&#27169;&#22411;)<a class="anchor-link" href="#&#24377;&#29699;&#27169;&#22411;(&#31034;&#20363;&#27169;&#22411;)">&#182;</a></h1><p>此模型仅仅做为一个数学建模的简单示例存在，此模型来源于MathWorks公司的MATLAB软件中的示例模型,虽然简单但是足以说明一般建立模型和演示模型的过程。</p>
+<table>
+<tr>
+    <td> <img src="sldemo_bounce1_annotated.png" alt="Drawing" style="width: 300px;"/> </td>
+    <td> <img src="bouncing_ball_modelpic.jpeg" alt="Drawing" style="width: 300px;"/> </td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -11760,7 +11766,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>对于单摆来说，当摆角不大时，它的运动近似为简谐运动，周期为$ 2\pi\sqrt{\frac{L}{g}} $ 可以把一排摆线长度为等差数列的单摆排列起来，同时偏移平衡位置一个角度之后释放，摆线长度的公差比较小，这样这各种摆的周期差距不大，而随着时间的累积相位差越来越大，这样就可以看到摆球像一列波一样振动。</p>
+<p>将小球放置在位置在位置x0的位置，重力加速度g取$-9.8m/{s^{2}}$，小球加速下落，当小球位置与地面接触之后，因为能量损失，小球的速度反转并变小，这个与小球的弹性系数有关，记为b,这个过程不断进行下去，小球最终会完全停留在地面上。这个过程中随着时间的变化可以记录和分析相关变量，比如小球位置和小球的速度。</p>
 
 </div>
 </div>
@@ -11770,44 +11776,15 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>下图是波摆装置<img src="Scientia-Pendulum-Waves.png" alt="Pendulum Wave"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>如果将摆球涂上荧光材料，置于黑暗的空间中，可以达到有意思的艺术效果，如下图:
-<img src="pendulum_wave-light.gif" alt="Pendulum Wave Light"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>可以通过一组不同参数的单摆模拟波摆，选择合适的时间单位$\Delta t$,之后使用如下差分方程不断更新摆球位置</p>
-<ul>
-<li>$x = x+v\Delta t$</li>
-<li>$f = ma$</li>
-<li>$v = v+a\Delta t$</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>模拟效果如下，请自行在模拟白板测试:<img src="PendulumWaveSim.jpg" alt="PendulumWaveSim"></p>
-
+<p>这个模型基本上包含的变量有两个小球的位置x和速度v。基本规律有两个：$$\Delta V=\Delta tg$$ $$\Delta x = v \Delta t+0.5g{\Delta t}^{2}$$，初始常数为两个，位置x0(初始速度为0)和反弹系数b。
+   数学模型建立和计算的过程也是如此，一般只知道模型中的瞬时规律、局部作用规律或是每一个步骤或周期的规律，而建立模型分析和计算得到系统总体规律，这与通过微分方程求解得到系统方程非常相似。
+   下图是经过长时间计算得到的位置和速度曲线结果:</p>
+<table>
+<tr>
+    <td> <img src="bouncingballsim_x.jpeg" alt="Drawing" style="width: 300px;"/> </td>
+    <td> <img src="bouncingballsim_v.jpeg" alt="Drawing" style="width: 300px;"/> </td>
+</tr>
+</table>
 </div>
 </div>
 </div>
