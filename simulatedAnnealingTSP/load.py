@@ -21,6 +21,9 @@ class SimulatedAnnealingTSP:
         #init
         width = SimulatedAnnealingTSP.width
         height = SimulatedAnnealingTSP.height
+        SimulatedAnnealingTSP.pointList = []
+        SimulatedAnnealingTSP.pointSeqList = []
+        SimulatedAnnealingTSP.lineList = []
         for i in range(SimulatedAnnealingTSP.numPoints):
             x = nm.random.randint(width)
             y = nm.random.randint(height)

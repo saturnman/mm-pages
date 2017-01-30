@@ -18,6 +18,11 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
 
     $scope.testList = [1,2,3,4,5];
 
+    $scope.cyclicOptionList = [
+        {name:"周期边界",value:true},
+        {name:"开放边界",value:false}
+    ];
+
     $scope.params = {
         r:4.0,
         x1start:0.2,
@@ -25,25 +30,25 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
         iter_count:200,
         lines:1,
         exampleSel:1,
-        speed:1
+        speed:1,
+        cyclic:true
     };
+
+
 
     $scope.testList = [1,2];
 
-    $scope.drawline = function () {
+    $scope.boundaryConditionChanged = function () {
+        $scope.setCyclic($scope.params.cyclic);
+    };
 
-        console.log("drawline called.");
+    $scope.setCyclic = function (c) {
         var data = {
-            r:$scope.params.r,
-            x1start:$scope.params.x1start,
-            x2start:$scope.params.x2start,
-            iter_count:$scope.params.iter_count,
-            lines:$scope.params.lines,
-            handlerName:'drawLogisticPopulationModel'
+            'handlerName':"GameOfLife_setCyclic",
+            'cyclic':c
         };
-        console.log("data="+JSON.stringify(data));
-        $scope.bridge.callHandler('RunPyFunction', data, function responseCallback(responseData) {
-            console.log("JS received response:", responseData);
+        $scope.bridge.callHandler("RunPyFunction",data,function(res) {
+
         });
     };
 

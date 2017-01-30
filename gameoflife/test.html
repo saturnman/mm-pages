@@ -1,17 +1,31 @@
 <div>
     <div class="row">
-        <button class="btn btn-warning pull-right" ng-click="reload()">Reload</button>
+        <button class="btn btn-warning pull-right" ng-click="reload()">刷新</button>
     </div>
     <div class="row">
         <div class="form-group">
-            <label class="control-label col-md-2 col-xs-2" for="speed">演化速度</label>
-            <select id="speed" ng-options="v as v for v in [1,2,3,4]" ng-model="params.speed" class="col-md-3 col-xs-3" ng-change="changeSpeed()"></select>
+            <div class="col-xs-2">
+                <label class="control-label" for="speed">演化速度</label>
+            </div>
+            <div class="col-xs-3">
+                <select id="speed" ng-options="v as v for v in [1,2,3,4]" ng-model="params.speed" class="form-control" ng-change="changeSpeed()"></select>
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="form-group">
-            <label class="control-label col-md-2 col-xs-2" for="exampleSel">测试设置</label>
-            <select id="exampleSel" ng-options="v as v for v in [1,2,3,4]" ng-model="params.exampleSel" class="col-md-3 col-xs-3"></select>
+            <div class="col-xs-2">
+                <label class="control-label" for="exampleSel">测试设置</label>
+            </div>
+            <div class="col-xs-3">
+                <select id="exampleSel" ng-options="v as v for v in [1,2,3,4]" ng-model="params.exampleSel" class="form-control"></select>
+            </div>
+            <div class="col-xs-2">
+                <label class="control-label">边界条件</label>
+            </div>
+            <div class="col-xs-3">
+                <select class="form-control" ng-options="v.value as v.name for v in cyclicOptionList" ng-model="params.cyclic" ng-change="boundaryConditionChanged()"></select>
+            </div>
         </div>
     </div>
     <div class="row">

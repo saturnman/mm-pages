@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>gameoflife</title>
+<title>Barnsleyfern</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11751,16 +11751,8 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="&#29983;&#21629;&#28216;&#25103;">&#29983;&#21629;&#28216;&#25103;<a class="anchor-link" href="#&#29983;&#21629;&#28216;&#25103;">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>生命游戏是一种零玩家的游戏，由Conway于1970年发明，自发明以来得到广大爱好者的广泛研究，因为它构造非常简单但是生成的模式确异常复杂和难以预测。这个游戏主要是对自然种群内个体生长和死亡的一种简单模拟，世界被简单模拟为矩形框内的小格子，一个小格子称为一个元胞，它的8个相邻格子称为它的邻居，为了计算上的方便，有时将小格子的上下边界和左右边界被连接起来，组成一个封闭的周期世界，世界上元胞的初始值为系统的初始条件，根据一定的规则进行演化。生命游戏虽然构造非常简单，但是不同的初始条件可以演化出一场复杂的系统行为，而且目前没有任何理论可以对这些行为在初始时进行预测。</p>
+<h1 id="Barnsley-fern">Barnsley fern<a class="anchor-link" href="#Barnsley-fern">&#182;</a></h1><p>Barnsley fern 是由英国数学家Michael Barnsley设计的一套仿生算法，通过迭代计算生成图形来模仿植物叶片的形态，蕨类植物的形态等,Barnsley的算法包含4个如下的仿射变换
+$$f(x,y) = \begin{bmatrix}a & b \\ c & d \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} + \begin{bmatrix} e \\ f \end{bmatrix}$$</p>
 
 </div>
 </div>
@@ -11770,95 +11762,63 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="&#20803;&#32990;&#28436;&#21270;&#26465;&#20214;&#65306;">&#20803;&#32990;&#28436;&#21270;&#26465;&#20214;&#65306;<a class="anchor-link" href="#&#20803;&#32990;&#28436;&#21270;&#26465;&#20214;&#65306;">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ol>
-<li>如果活着的元胞的活着的邻居小于2个，这个元胞下一个周期将死亡，这是模拟群体聚集数量过于稀疏的状况</li>
-<li>如果活着的元胞的活着的邻居为2个或3个，这个元胞下一下周期依旧保持生存，这是模拟正常的种群生存状态</li>
-<li>如果活着的元胞的活着的邻居大于3个，这个元胞下一个周期将死亡，这是模拟环境压力造成死亡的情况</li>
-<li>如果死的元胞活着的邻居刚好是3个，这个元胞下一下周期将变为活的状态，这个模拟了个体的繁殖</li>
-</ol>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="&#31995;&#32479;&#34892;&#20026;&#65306;">&#31995;&#32479;&#34892;&#20026;&#65306;<a class="anchor-link" href="#&#31995;&#32479;&#34892;&#20026;&#65306;">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>生命游戏从诞生开始就引起了大量爱好者的关注，因为如此简单的游戏根据初始条件的不同居然可以演化出异常复杂的行为。同时也诞生了大量爱好者对特定初始条件的收集和特定模式的收集</p>
-<p>下面的模式被称为Gospers滑翔机发射器</p>
-<p><img src="Gospers_glider_gun.gif" alt="Gospers glider gun.gif">
-生命游戏有一些非常基础的模式，比如定态模式、周期模式和移动的飞船模式，有些初始条件最终会演化成一系列基础模式的组合，但是以于从初始条件直接判断系统是不是会最终走向定态还是周期态，这是不可判定的问题。</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="&#19968;&#20123;&#26377;&#36259;&#30340;&#22522;&#30784;&#27169;&#24335;">&#19968;&#20123;&#26377;&#36259;&#30340;&#22522;&#30784;&#27169;&#24335;<a class="anchor-link" href="#&#19968;&#20123;&#26377;&#36259;&#30340;&#22522;&#30784;&#27169;&#24335;">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="---&#23450;&#24577;&#27169;&#24335;">   &#23450;&#24577;&#27169;&#24335;<a class="anchor-link" href="#---&#23450;&#24577;&#27169;&#24335;">&#182;</a></h2><table>
+<h2 id="Barnsley&#36873;&#29992;&#19968;&#32452;&#21442;&#25968;&#22914;&#19979;&#65306;">Barnsley&#36873;&#29992;&#19968;&#32452;&#21442;&#25968;&#22914;&#19979;&#65306;<a class="anchor-link" href="#Barnsley&#36873;&#29992;&#19968;&#32452;&#21442;&#25968;&#22914;&#19979;&#65306;">&#182;</a></h2><table>
 <thead><tr>
-<th>方块</th>
-<th><img src="132px-Game_of_life_block_with_border.svg.png" alt="方块"></th>
+<th>w</th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>d</th>
+<th>e</th>
+<th>f</th>
+<th>p</th>
+<th>Portion generated</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>蜂巢</td>
-<td><img src="196px-Game_of_life_beehive.svg.png" alt="蜂巢"></td>
+<td>ƒ1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.16</td>
+<td>0</td>
+<td>0</td>
+<td>0.01</td>
+<td>Stem</td>
 </tr>
 <tr>
-<td>-----</td>
-<td>-------</td>
+<td>ƒ2</td>
+<td>0.85</td>
+<td>0.04</td>
+<td>−0.04</td>
+<td>0.85</td>
+<td>0</td>
+<td>1.60</td>
+<td>0.85</td>
+<td>Successively smaller leaflets</td>
 </tr>
 <tr>
-<td>树叶</td>
-<td><img src="196px-Game_of_life_loaf.svg.png" alt="树叶"></td>
+<td>ƒ3</td>
+<td>0.20</td>
+<td>−0.26</td>
+<td>0.23</td>
+<td>0.22</td>
+<td>0</td>
+<td>1.60</td>
+<td>0.07</td>
+<td>Largest left-hand leaflet</td>
 </tr>
 <tr>
-<td>-----</td>
-<td>-------</td>
-</tr>
-<tr>
-<td>小船</td>
-<td><img src="164px-Game_of_life_boat.svg.png" alt="小船"></td>
-</tr>
-<tr>
-<td>-----</td>
-<td>-------</td>
-</tr>
-<tr>
-<td>澡盆</td>
-<td><img src="Game_of_life_flower.svg.png" alt="澡盆"></td>
+<td>ƒ4</td>
+<td>−0.15</td>
+<td>0.28</td>
+<td>0.26</td>
+<td>0.24</td>
+<td>0</td>
+<td>0.44</td>
+<td>0.07</td>
+<td>Largest right-hand leaflet</td>
 </tr>
 </tbody>
 </table>
@@ -11872,40 +11832,85 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#21608;&#26399;&#27169;&#24335;">&#21608;&#26399;&#27169;&#24335;<a class="anchor-link" href="#&#21608;&#26399;&#27169;&#24335;">&#182;</a></h2><table>
+$$
+f_1(x,y) = \begin{bmatrix} \ 0.00 & \ 0.00 \ \\ 0.00 & \ 0.16 \end{bmatrix} \begin{bmatrix} \ x \\ y \end{bmatrix}
+$$$$
+f_2(x,y) = \begin{bmatrix} \ 0.85 & \ 0.04 \ \\ -0.04 & \ 0.85 \end{bmatrix} \begin{bmatrix} \ x \\ y \end{bmatrix} + \begin{bmatrix} \ 0.00 \\ 1.60 \end{bmatrix}
+$$$$
+f_3(x,y) = \begin{bmatrix} \ 0.20 & \ -0.26 \ \\ 0.23 & \ 0.22 \end{bmatrix} \begin{bmatrix} \ x \\ y \end{bmatrix} + \begin{bmatrix} \ 0.00 \\ 1.60 \end{bmatrix}
+$$$$
+f_4(x,y) = \begin{bmatrix} \ -0.15 & \ 0.28 \ \\ 0.26 & \ 0.24 \end{bmatrix} \begin{bmatrix} \ x \\ y \end{bmatrix} + \begin{bmatrix} \ 0.00 \\ 0.44 \end{bmatrix}
+$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>其中参数p是每次迭代选用不同参数的概率，从原点 $ (x_0 = 0, y_0 = 0)$出发，反复迭代计算，将得到的点绘制成曲线，得到的图形非常类似植物叶片，如下图:<img src="Barnsley_fern_plotted_with_VisSim.png" alt="Barnsley fern"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="&#21442;&#25968;&#21464;&#21270;">&#21442;&#25968;&#21464;&#21270;<a class="anchor-link" href="#&#21442;&#25968;&#21464;&#21270;">&#182;</a></h1><h2 id="&#36890;&#36807;&#25913;&#21464;&#21442;&#25968;&#30340;&#25968;&#20540;&#65292;&#21487;&#20197;&#29983;&#25104;&#20854;&#23427;&#24418;&#24335;&#30340;&#21494;&#29255;&#65292;&#26377;&#20123;&#38750;&#24120;&#31867;&#20284;&#38024;&#21494;&#22320;&#24102;&#30340;&#26893;&#29289;&#21494;&#29255;&#65292;&#27604;&#22914;&#22914;&#19979;&#21442;&#25968;">&#36890;&#36807;&#25913;&#21464;&#21442;&#25968;&#30340;&#25968;&#20540;&#65292;&#21487;&#20197;&#29983;&#25104;&#20854;&#23427;&#24418;&#24335;&#30340;&#21494;&#29255;&#65292;&#26377;&#20123;&#38750;&#24120;&#31867;&#20284;&#38024;&#21494;&#22320;&#24102;&#30340;&#26893;&#29289;&#21494;&#29255;&#65292;&#27604;&#22914;&#22914;&#19979;&#21442;&#25968;<a class="anchor-link" href="#&#36890;&#36807;&#25913;&#21464;&#21442;&#25968;&#30340;&#25968;&#20540;&#65292;&#21487;&#20197;&#29983;&#25104;&#20854;&#23427;&#24418;&#24335;&#30340;&#21494;&#29255;&#65292;&#26377;&#20123;&#38750;&#24120;&#31867;&#20284;&#38024;&#21494;&#22320;&#24102;&#30340;&#26893;&#29289;&#21494;&#29255;&#65292;&#27604;&#22914;&#22914;&#19979;&#21442;&#25968;">&#182;</a></h2><table>
 <thead><tr>
-<th>眨眼者</th>
-<th><img src="Game_of_life_blinker.gif" alt="眨眼者"></th>
+<th>w</th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>d</th>
+<th>e</th>
+<th>f</th>
+<th>p</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>蟾蜍</td>
-<td><img src="Game_of_life_toad.gif" alt="蟾蜍"></td>
+<td>ƒ1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.25</td>
+<td>0</td>
+<td>−0.4</td>
+<td>0.02</td>
 </tr>
 <tr>
-<td>-------</td>
-<td>----------</td>
+<td>ƒ2</td>
+<td>0.95</td>
+<td>0.005</td>
+<td>−0.005</td>
+<td>0.93</td>
+<td>−0.002</td>
+<td>0.5</td>
+<td>0.84</td>
 </tr>
 <tr>
-<td>灯塔</td>
-<td><img src="Game_of_life_beacon.gif" alt="灯塔"></td>
+<td>ƒ3</td>
+<td>0.035</td>
+<td>−0.2</td>
+<td>0.16</td>
+<td>0.04</td>
+<td>−0.09</td>
+<td>0.02</td>
+<td>0.07</td>
 </tr>
 <tr>
-<td>-------</td>
-<td>----------</td>
-</tr>
-<tr>
-<td>脉冲星(3周期)</td>
-<td><img src="Game_of_life_pulsar.gif" alt="脉冲星"></td>
-</tr>
-<tr>
-<td>-------</td>
-<td>----------</td>
-</tr>
-<tr>
-<td>15周期</td>
-<td><img src="I-Column.gif" alt="Pentadecathlon"></td>
+<td>ƒ4</td>
+<td>−0.04</td>
+<td>0.2</td>
+<td>0.16</td>
+<td>0.04</td>
+<td>0.083</td>
+<td>0.12</td>
+<td>0.07</td>
 </tr>
 </tbody>
 </table>
@@ -11919,20 +11924,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#31227;&#21160;&#27169;&#24335;">&#31227;&#21160;&#27169;&#24335;<a class="anchor-link" href="#&#31227;&#21160;&#27169;&#24335;">&#182;</a></h2><table>
-<thead><tr>
-<th>滑翔机</th>
-<th><img src="Game_of_life_animated_glider.gif" alt="滑翔机"></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>小飞船</td>
-<td><img src="Game_of_life_animated_LWSS.gif" alt="小飞船"></td>
-</tr>
-</tbody>
-</table>
-<hr>
+<p><img src="Barnsley_fern_mutated_-Leptosporangiate_fern.png" alt="mutant"></p>
 
 </div>
 </div>
@@ -11942,11 +11934,12 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>生命游戏有一些并不复杂的模式会经过非常长的迭代才会达到稳定状态或是消失，Diehard(die hard :D)是一种经历130代最终消失的模式，Acorn是一种经历5206代才最终达到稳定状态，稳态有633个元胞。这两种模式本身仅包含7个元胞，这充分说明简单的生命游戏的行为异常复杂。有理论认为无限大的元胞自动机是图灵完备的，要以设计任意图灵机可以实现的算法，当然这样的设计异常艰难和复杂，关于更多内容请自行查阅相关书籍。</p>
+<h1 id="&#21442;&#32771;">&#21442;&#32771;<a class="anchor-link" href="#&#21442;&#32771;">&#182;</a></h1>
+</div>
+</div>
+</div>[1] https://en.wikipedia.org/wiki/Barnsley_fern
 
-</div>
-</div>
-</div>
+[2] http://www.chradams.co.uk/fern/maker.html
     </div>
   </div>
 </body>

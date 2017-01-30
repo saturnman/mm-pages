@@ -1,23 +1,10 @@
 <div>
     <div class="row">
-        <button class="btn btn-warning pull-right" ng-click="reload()">Reload</button>
-    </div>
-    <div class="row">
-        <label class="control-label col-xs-2">示例列表</label>
-        <div class="col-xs-3"></div>
-            <select ng-options="v.value as v.name for v in demoList" ng-model="params.demoSelection" ng-change="demoSelectionChanged()"></select>
-        </div>
-    </div>
-    <div class="row">
-        <label class="control-label col-xs-2">b值</label>
-        <div class="col-xs-3">
-            <input type="text" ng-model="params.b" class="form-control">
-        </div>
-        <button class="btn btn-success" class="col-xs-2" ng-click="setb()">设置b</button>
+        <button class="btn btn-warning pull-right" ng-click="reload()">刷新</button>
     </div>
     <div class="row">
         <button class="btn btn-success" ng-click="start()">开始</button>
         <button class="btn btn-success" ng-click="stop()">停止</button>
-        <button class="btn btn-success" ng-click="draw()">绘图</button>
+        <button class="btn btn-success" ng-click="continue()">继续</button>
     </div>
 </div>

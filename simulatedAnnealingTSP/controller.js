@@ -100,34 +100,18 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
         }
     };
 
-
-    $scope.setb = function () {
-        var data = {
-            'handlerName':'SimulatedAnnealingTSP_setb',
-            'b':$scope.params.b
-        };
-        $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
-
+    $scope.start = function () {
+        $scope.setup().then(function () {
+            $scope.slowProcessPainter.start();
         });
     };
 
-    $scope.start = function () {
-        $scope.slowProcessPainter.start(120,120);
+    $scope.continue = function () {
+        $scope.slowProcessPainter.continue();
     };
 
     $scope.stop = function () {
         $scope.slowProcessPainter.stop();
-    };
-
-    $scope.asyncstep = function () {
-        var deferred = $.Deferred();
-        var data = {
-            'handlerName':'SimulatedAnnealingTSP_asyncstep'
-        };
-        $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
-            deferred.resolve();
-        });
-        return deferred.promise();
     };
 
     $scope.step = function () {
@@ -151,7 +135,7 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
         });
     };
 
-    $scope.setup = function (width,height,temperature) {
+    $scope.setup = function () {
         var deferred = $.Deferred();
         var data = {
             'handlerName':'SimulatedAnnealingTSP_setup'
@@ -167,6 +151,9 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
         $scope.animation.changeSpeed();
     };
 
+    $scope.reload = function () {
+        window.location.reload();
+    };
 
     $scope.init = function () {
         setupWebViewJavascriptBridge(function(bridge) {
@@ -210,12 +197,11 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
                 }
                 //console.log("run tick fn");
             },
-            start:function (width,height) {
+            start:function () {
                 if(this.stopped) {
                     //this.interval = ;
                     this.counter = 10000;
                     this.stopped = false;
-                    $scope.setup(width,height);
                     this.timer = setInterval(this.step, this.interval);
                 }
             },
