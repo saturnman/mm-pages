@@ -75,14 +75,6 @@ def draw(ax):
     ax.set_axis_off()
     ax.set_xlim(ax.dataLim.xmin, ax.dataLim.xmax)
     ax.invert_yaxis()
-def draw_Barnsley(ax):
-    lines = L_System.get_Barnsley_lines()
-    (x, y) = zip(*lines)
-    ax.scatter(x,y,marker=',',lw=0, s=1,c='g')
-    #ax.axis("equal")
-    #ax.set_axis_off()
-    #ax.set_xlim(ax.dataLim.xmin, ax.dataLim.xmax)
-    #ax.invert_yaxis()
 
 def Buffon_draw(data):
     fig = pl.gcf()

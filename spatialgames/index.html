@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>gameoflife</title>
+<title>SpatialGames</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11751,16 +11751,9 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="&#29983;&#21629;&#28216;&#25103;">&#29983;&#21629;&#28216;&#25103;<a class="anchor-link" href="#&#29983;&#21629;&#28216;&#25103;">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>生命游戏是一种零玩家的游戏，主要是对自然种群内个体生长和死亡的一种简单模拟，世界被简单模拟为矩形框内的小格子，一个小格子称为一个元胞，它的8个相邻格子称为它的邻居，为了计算上的方法，小格子的上下边界和左右边界被连接起来，组成一个封闭的周期世界，世界上元胞的初始值为系统的初始条件，根据一定的规则进行演化。生命游戏虽然构造非常简单，但是不同的初始条件可以演化出一场复杂的系统行为，而且目前没有任何理论可以对这些行为在初始时进行预测。</p>
+<h1 id="&#31354;&#38388;&#21338;&#24328;">&#31354;&#38388;&#21338;&#24328;<a class="anchor-link" href="#&#31354;&#38388;&#21338;&#24328;">&#182;</a></h1><p>空间博弈是把所有参与博弈个体放置在空间点阵上，所有博弈个人收到空间距离的限制，只能和自己最近邻的个体展开博弈，通过博弈获得的收益决定个体策略生存或是转换为周围某更高收益获胜方的策略。实际上空间博弈也是元胞自动机的一种，只不过如果排列成元胞自动机的规则，规则集合会异常复杂，反而使用博弈收益计算来更新元胞会更加方便。</p>
+<h3 id="&#21338;&#24328;&#35268;&#21017;">&#21338;&#24328;&#35268;&#21017;<a class="anchor-link" href="#&#21338;&#24328;&#35268;&#21017;">&#182;</a></h3><p>元胞世界的设置选择周期边界条件，近邻规则选择Moore近邻，也就是与元胞最近的8个元胞做为邻居，下图为Moore近邻图示。
+<img src="Moore_neighborhood_with_cardinal_directions.svg.png" alt="Moore 近邻"></p>
 
 </div>
 </div>
@@ -11770,21 +11763,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="&#20803;&#32990;&#28436;&#21270;&#26465;&#20214;&#65306;">&#20803;&#32990;&#28436;&#21270;&#26465;&#20214;&#65306;<a class="anchor-link" href="#&#20803;&#32990;&#28436;&#21270;&#26465;&#20214;&#65306;">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ol>
-<li>如果活着的元胞的活着的邻居小于2个，这个元胞下一个周期将死亡，这是模拟群体聚集数量过于稀疏的状况</li>
-<li>如果活着的元胞的活着的邻居为2个或3个，这个元胞下一下周期依旧保持生存，这是模拟正常的种群生存状态</li>
-<li>如果活着的元胞的活着的邻居大于3个，这个元胞下一个周期将死亡，这是模拟环境压力造成死亡的情况</li>
-<li>如果死的元胞活着的邻居刚好是3个，这个元胞下一下周期将变为活的状态，这个模拟了个体的繁殖</li>
-</ol>
+<p>博弈收益为与周边8个邻居博弈的收益总和，所有元胞同步博弈计算收益并同步更新，元胞收益如果比邻居都高就维持原来的策略不变，否则就转变为邻居中收益最高的策略，更新后再进入下一轮的博弈。</p>
 
 </div>
 </div>
@@ -11794,7 +11773,30 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="&#31995;&#32479;&#34892;&#20026;&#65306;">&#31995;&#32479;&#34892;&#20026;&#65306;<a class="anchor-link" href="#&#31995;&#32479;&#34892;&#20026;&#65306;">&#182;</a></h3>
+<h3 id="&#31354;&#38388;&#21512;&#20316;">&#31354;&#38388;&#21512;&#20316;<a class="anchor-link" href="#&#31354;&#38388;&#21512;&#20316;">&#182;</a></h3><p>本文研究一类有趣的特例，博弈为囚徒困境博弈。囚徒困境是说两个囚徒都警察抓到分在不同的审讯室审讯，彼此不能沟通信息，两人可以选择沉默或是揭发对方的更严重的犯罪事实来为自己减刑，但是如果两人同时揭发，获得的减刑就会比较小，整体收益矩阵如下：</p>
+<hr>
+<table>
+<thead><tr>
+<th>_</th>
+<th>C</th>
+<th>D</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>  C</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>  D</td>
+<td>b</td>
+<td>$\epsilon$</td>
+</tr>
+</tbody>
+</table>
+<hr>
+
 </div>
 </div>
 </div>
@@ -11803,25 +11805,98 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>生命游戏从诞生开始就引起了大量爱好者的关注，因为如此简单的游戏根据初始条件的不同居然可以演化出异常复杂的行为。同时也诞生了大量爱好者对特定初始条件的收集和特定模式的收集</p>
-<p>下面的模式被称为Gospers glider 手枪</p>
-<p><img src="Gospers_glider_gun.gif" alt="Gospers glider gun.gif"></p>
+<p>C为合作者，D为背叛者。博弈收益如下：</p>
+<ul>
+<li>合作者遇到合作者，收益为1</li>
+<li>合作者遇到背叛者，收益为0</li>
+<li>背叛者遇到合作者，收益为b</li>
+<li>背叛者遇到背叛者，收益为$\epsilon$
+($\epsilon$是一个比较小的数)</li>
+</ul>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span> 
-</pre></div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>从上面的规则可以看出，空间中合作者与与合作者群居，背叛者与背叛者群居有助于提高策略的生存能力，这种趋势称为空间互惠，当然群居是否会持续生存还严重依赖参数b的影响。
+为了更直观观察博弈的动态过程，我们为不同策略状态的元胞使用不同色彩标识，色标如下：</p>
+<ul>
+<li>蓝色代表合作者C,其上一代也是合作者C.</li>
+<li>红色代表背叛者D,其上一代也是背叛者D.</li>
+<li>绿色代表合作者C,其上一代是背叛者D.</li>
+<li>黄色代表背叛者D,其上一代是全作者C.</li>
+</ul>
+<p>(因此红色和蓝色代表静态的元胞，而绿色和黄色代表动态的元胞）</p>
 
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="&#21338;&#24328;&#32467;&#26524;">&#21338;&#24328;&#32467;&#26524;<a class="anchor-link" href="#&#21338;&#24328;&#32467;&#26524;">&#182;</a></h1><h3 id="&#38543;&#26426;&#22343;&#21248;&#21021;&#22987;&#21270;&#20803;&#32990;&#31574;&#30053;">&#38543;&#26426;&#22343;&#21248;&#21021;&#22987;&#21270;&#20803;&#32990;&#31574;&#30053;<a class="anchor-link" href="#&#38543;&#26426;&#22343;&#21248;&#21021;&#22987;&#21270;&#20803;&#32990;&#31574;&#30053;">&#182;</a></h3><hr>
+<table>
+<thead><tr>
+<th>b=1.10</th>
+<th><img src="sg_b1.1.jpeg" alt="b=1.10"> </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>b=1.15</td>
+<td><img src="sg_b1.15.jpeg" alt="b=1.15"> </td>
+</tr>
+<tr>
+<td>b=1.24</td>
+<td><img src="sg_b1.24.jpeg" alt="b=1.24"> </td>
+</tr>
+<tr>
+<td>b=1.35</td>
+<td><img src="sg_b1.35.jpeg" alt="b=1.35"> </td>
+</tr>
+<tr>
+<td>b=1.55</td>
+<td><img src="sg_b1.55.jpeg" alt="b=1.55"></td>
+</tr>
+</tbody>
+</table>
+<hr>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#32972;&#21467;&#32773;&#21644;&#21512;&#20316;&#32773;&#20837;&#20405;">&#32972;&#21467;&#32773;&#21644;&#21512;&#20316;&#32773;&#20837;&#20405;<a class="anchor-link" href="#&#32972;&#21467;&#32773;&#21644;&#21512;&#20316;&#32773;&#20837;&#20405;">&#182;</a></h3><p>对于完全是合作者的初始条件，在中间放置4个近邻的背叛者，在b值达到一定值时背叛者将会在合作者的空间中生存下来，这就是背叛者对合作者的入侵，相反也有合作者对背叛者的入侵。
+下图为b=1.6情况下背叛者入侵合作者空间
+<img src="sg_inv_b1.6.jpeg" alt="invasion"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#24322;&#27493;&#26356;&#26032;&#32972;&#21467;&#32773;&#20837;&#20405;&#21512;&#20316;&#32773;&#31354;&#38388;">&#24322;&#27493;&#26356;&#26032;&#32972;&#21467;&#32773;&#20837;&#20405;&#21512;&#20316;&#32773;&#31354;&#38388;<a class="anchor-link" href="#&#24322;&#27493;&#26356;&#26032;&#32972;&#21467;&#32773;&#20837;&#20405;&#21512;&#20316;&#32773;&#31354;&#38388;">&#182;</a></h3><p>之前描述的元胞更新规则是所有元胞同步更新，可以将同步更新规则更改为每次随机选取元胞之后更新元胞状态和相关元胞的博弈收益。在异步更新规则下，b=1.59时背叛者就可以入侵合作者占据的空间，异步更新生成的图样有分形特征。</p>
+<table>
+    <tr>
+        <td><img src="sg_async1.jpeg"></td>
+        <td><img src="sg_async2.jpeg"></td>
+    </tr>
+</table>
+</div>
+</div>
 </div>
     </div>
   </div>

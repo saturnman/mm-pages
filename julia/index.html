@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>gameoflife</title>
+<title>JuliaSet</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11751,16 +11751,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="&#29983;&#21629;&#28216;&#25103;">&#29983;&#21629;&#28216;&#25103;<a class="anchor-link" href="#&#29983;&#21629;&#28216;&#25103;">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>生命游戏是一种零玩家的游戏，主要是对自然种群内个体生长和死亡的一种简单模拟，世界被简单模拟为矩形框内的小格子，一个小格子称为一个元胞，它的8个相邻格子称为它的邻居，为了计算上的方法，小格子的上下边界和左右边界被连接起来，组成一个封闭的周期世界，世界上元胞的初始值为系统的初始条件，根据一定的规则进行演化。生命游戏虽然构造非常简单，但是不同的初始条件可以演化出一场复杂的系统行为，而且目前没有任何理论可以对这些行为在初始时进行预测。</p>
+<h1 id="Julia-Set">Julia Set<a class="anchor-link" href="#Julia-Set">&#182;</a></h1><p>Julia集合来源于复数复杂系统，常见的Julia集合都是复数多项式反复迭代过程产生，Julia集合中的点就是那些表现行为混沌的点。当然对于直接表现复平面上的点在多项式迭代过程中的混沌行为程度是非常困难的，所以一般绘图技巧都是将点的混沌程度映射成为一个实数，以便于可视化。一般选择的的都是逃逸速度，所谓逃逸速度就是点经过多少次多项式迭代之后，模超过一个比较大的数，迭代次数表征逃逸速度的快慢。</p>
 
 </div>
 </div>
@@ -11770,21 +11761,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="&#20803;&#32990;&#28436;&#21270;&#26465;&#20214;&#65306;">&#20803;&#32990;&#28436;&#21270;&#26465;&#20214;&#65306;<a class="anchor-link" href="#&#20803;&#32990;&#28436;&#21270;&#26465;&#20214;&#65306;">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<ol>
-<li>如果活着的元胞的活着的邻居小于2个，这个元胞下一个周期将死亡，这是模拟群体聚集数量过于稀疏的状况</li>
-<li>如果活着的元胞的活着的邻居为2个或3个，这个元胞下一下周期依旧保持生存，这是模拟正常的种群生存状态</li>
-<li>如果活着的元胞的活着的邻居大于3个，这个元胞下一个周期将死亡，这是模拟环境压力造成死亡的情况</li>
-<li>如果死的元胞活着的邻居刚好是3个，这个元胞下一下周期将变为活的状态，这个模拟了个体的繁殖</li>
-</ol>
+<h3 id="&#22797;&#20108;&#27425;&#22810;&#39033;&#24335;&#30340;&#36845;&#20195;&#31995;&#32479;">&#22797;&#20108;&#27425;&#22810;&#39033;&#24335;&#30340;&#36845;&#20195;&#31995;&#32479;<a class="anchor-link" href="#&#22797;&#20108;&#27425;&#22810;&#39033;&#24335;&#30340;&#36845;&#20195;&#31995;&#32479;">&#182;</a></h3><p>像$f_c(z) = z^2 + c$这样的复二次多项式是最常见的迭代方式，这样的迭代方程因参数不同会产生的丰富多彩的Julia集合，对不同逃逸速度的点采用不通的着色，可以在计算机中生成非常漂亮图形。</p>
 
 </div>
 </div>
@@ -11794,7 +11771,38 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="&#31995;&#32479;&#34892;&#20026;&#65306;">&#31995;&#32479;&#34892;&#20026;&#65306;<a class="anchor-link" href="#&#31995;&#32479;&#34892;&#20026;&#65306;">&#182;</a></h3>
+<hr>
+<table>
+<thead><tr>
+<th>c=1−φ</th>
+<th><img src="Time_escape_Julia_set_from_coordinate.jpg" width="200px"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>c=(φ−2)+(φ−1)i</td>
+<td><img src="Julia_0.4_0.6.png" width="200px"></td>
+</tr>
+<tr>
+<td>c=0.285+0i</td>
+<td><img src="Julia_0.285_0.png" width="200px"></td>
+</tr>
+<tr>
+<td>c=0.285+0.01i</td>
+<td><img src="Julia_0.285_0.01.png" width="200px"></td>
+</tr>
+<tr>
+<td>c=0.45+0.1428i</td>
+<td><img src="Julia_0.45_0.1428.png" width="200px"></td>
+</tr>
+<tr>
+<td>c=-0.70176-0.3842i</td>
+<td><img src="Julia_-0.70176_-0.3842.png" width="200px"></td>
+</tr>
+</tbody>
+</table>
+<hr>
+
 </div>
 </div>
 </div>
@@ -11803,25 +11811,10 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>生命游戏从诞生开始就引起了大量爱好者的关注，因为如此简单的游戏根据初始条件的不同居然可以演化出异常复杂的行为。同时也诞生了大量爱好者对特定初始条件的收集和特定模式的收集</p>
-<p>下面的模式被称为Gospers glider 手枪</p>
-<p><img src="Gospers_glider_gun.gif" alt="Gospers glider gun.gif"></p>
-
+<p>实际对Julia Set图形的渲染需要的计算量还是非常大的，在移动设备上很难做到高质量的计算，只能做简单粗糙的计算。这里有一段渲染好的视频，在普通工作站要渲染数十个小时，供参考。</p>
+<video src="juliasetvideo.mp4" controls="controls" width="430px"/>
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div>
     </div>
   </div>

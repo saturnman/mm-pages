@@ -10,16 +10,16 @@ from matplotlib import collections
 class Ising:
     width = 200
     height = 200
-    temperature = 50
+    temperature = 50.0
     gridData = nm.random.randint(2,size=(width,height))
-    dE = 400
+    dE = 500.0
     @staticmethod
     def draw():
         fig = plt.gcf()
         fig.clf()
         griddata = 1 - Ising.gridData
         plt.grid(which='none', axis='none', linestyle='-', color='r')
-        im = plt.imshow(griddata, cmap=plt.cm.gray, interpolation='nearest')
+        im = plt.imshow(griddata, cmap=plt.cm.gray, interpolation='nearest',vmin=0,vmax=1)
         # matplotlib.pyplot.axis('off')
         DPI = fig.get_dpi()
         fig.set_size_inches(800.0 / float(DPI), 800.0 / float(DPI))
@@ -28,10 +28,11 @@ class Ising:
         fig.clf()
     @staticmethod
     def step():
+        #print Ising.temperature
         width = Ising.width
         height = Ising.height
         gridDataCopy = Ising.gridData.copy()
-        for i in range(500):
+        for i in range(1500):
             y = nm.random.randint(Ising.width)
             x = nm.random.randint(Ising.height)
             x1 = (x - 1 + height) % height
@@ -69,7 +70,6 @@ def Ising_draw(data):
     Ising.draw()
 
 def Ising_step(data):
-    print data
     Ising.step()
 
 def Ising_setup(data):
@@ -77,11 +77,20 @@ def Ising_setup(data):
     width = data['width']
     height = data['height']
     temperature = data['temperature']
-    Ising.setup(width,height,temperature)
+    try:
+        temperature = float(temperature)
+        Ising.setup(width, height, temperature)
+    except:
+        print 'convert to float error'
 
 def Ising_setTemperature(data):
     temperature = data['temperature']
-    Ising.setTemperature(temperature)
+    print temperature
+    try:
+        temperature = float(temperature)
+        Ising.setTemperature(temperature)
+    except:
+        print 'convert to float error'
 
 PyBridge.registerHandler("Ising_draw", Ising_draw)
 PyBridge.registerHandler("Ising_step", Ising_step)

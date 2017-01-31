@@ -30,11 +30,15 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
     };
 
     $scope.start = function () {
-        $scope.slowProcessPainter.start(500,500,20);
+        $scope.slowProcessPainter.start(500,500,$scope.params.temperature);
     };
 
     $scope.stop = function () {
         $scope.slowProcessPainter.stop();
+    };
+
+    $scope.reload = function () {
+        window.location.reload();
     };
 
     $scope.step = function () {
@@ -57,6 +61,18 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
         });
     };
 
+    $scope.setTemperature = function () {
+        var data = {
+            'handlerName':'Ising_setTemperature',
+            temperature:$scope.params.temperature
+        };
+        $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
+            console.log("JS received response:", responseData);
+            deferred.resolve();
+        });
+    };
+
+
     $scope.setup = function (width,height,temperature) {
         var deferred = $.Deferred();
         var data = {
@@ -76,6 +92,10 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
         $scope.animation.changeSpeed();
     };
 
+
+    $scope.continue = function () {
+        $scope.slowProcessPainter.continue();
+    };
 
     $scope.init = function () {
         setupWebViewJavascriptBridge(function(bridge) {

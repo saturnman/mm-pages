@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>LSystemDoc</title>
+<title>BuffonNeedle</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11751,8 +11751,17 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="L-System">L-System<a class="anchor-link" href="#L-System">&#182;</a></h1><p>L-System是植物学家Aristid Lindenmayer发明的一种形式化的产生式系统，系统最初用来模拟和研究植物的生长形态。Lindenmayer发现很多植物形态都有类似自相似的特征，比如树木的形态，如下图：<img src="Fractal_weeds.jpg" alt="tree">
-因此Lindenmayer认为可以把植物的生长过程认为是一个局部依赖一组固定的规则，之后从一个点逐渐生长而成，因此发明了L演算系统。</p>
+<h1 id="Buffon&#33853;&#38024;&#23454;&#39564;">Buffon&#33853;&#38024;&#23454;&#39564;<a class="anchor-link" href="#Buffon&#33853;&#38024;&#23454;&#39564;">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Buffon 落针问题是在18世纪提出来的，问题就是在等间距的地板上投掷钢针，钢针与地板缝隙相交叉的概率是多大，这是有记载的最早的几何概率问题，问题如下图所示：
+<img src="220px-Buffon_needle.svg.png" alt="Buffon&#39;s needld"></p>
 
 </div>
 </div>
@@ -11762,12 +11771,8 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>L系统于一组变换规则和一个初始语句来不断产生新的语句。虽然听起来复杂，实际操作却非常简单，比如下面的例子：
-$$字母表符号集合 : {A B}$$
-$$常量 : \Phi(空集)$$
-$$初始语句  : A$$
-$$规则  : (A → AB), (B → A)$$
-通过7步的初始演算，就得到下面的结果：</p>
+<p>求解很容易，对于$b<t$的情况
+$P = \int_{\theta=0}^{\frac{\pi}{2}} \int_{x=0}^{(l/2)\sin\theta}  \frac{4}{t\pi}\,dx\,d\theta = \frac{2 l}{t\pi}$</p>
 
 </div>
 </div>
@@ -11777,16 +11782,7 @@ $$规则  : (A → AB), (B → A)$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<ul>
-<li>n = 0 : A</li>
-<li>n = 1 : AB</li>
-<li>n = 2 : ABA</li>
-<li>n = 3 : ABAAB</li>
-<li>n = 4 : ABAABABA</li>
-<li>n = 5 : ABAABABAABAAB</li>
-<li>n = 6 : ABAABABAABAABABAABABA</li>
-<li>n = 7 : ABAABABAABAABABAABABAABAABABAABAAB</li>
-</ul>
+<p>把这个问题反过来思考，可以通过这个实验来估算$\pi \approx \frac{2l\cdot n}{t h}$，实际上要达到对$\pi$比较好的近似，这里面是需要技巧的，毕竟落针实验得到的都是整数的n和x,一个针是否命中对最终的估算都会产生巨大的影响，要达到3位小数的精度都需要极大量的落针。已经知道355/113是对$\pi$一个非常好的近似，意大利数学家Mario Lazzarini就是利用这个已知的知识，设计了一个针长度是地板间距5/6的实验，这样就得到，π ≈ 5/3·n/x,让355/113 = 5/3·n/x得到x = 113n/213，这样设计落针次数是213的倍数，将有更大的概率得到对$\pi$的更好估计，Lazzarini 做了 3408 = 213*16次实验，得到估计值355/113。</p>
 
 </div>
 </div>
@@ -11796,8 +11792,8 @@ $$规则  : (A → AB), (B → A)$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>注意到每行的符号数量 1，2，3，5，8，13，21，34，这正是斐波那契数量的结果，如果使用更加复杂的生产规则，那么当然可以产生更加多样的语句。</p>
-<p>现在问题来了，这种语句和植物形态有什么关系呢？可以把生成的语句中的每个字母绑定一个动作，这样一条语句就成为了一个动作序列，如果这些动作序列是一系列的绘图动作，那么就会绘制出相应的图形。</p>
+<p>对于一般模拟结果要收敛到3位精度也是非常困难的，如下：
+<img src="buffon_needle_sim.jpeg" alt="Buffon&#39;s Needle Simulation"></p>
 
 </div>
 </div>
@@ -11807,41 +11803,7 @@ $$规则  : (A → AB), (B → A)$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>植物图形示例：
-$$字母表 : X F$$
-$$常量 : + − [ ]$$
-$$初始  : X$$
-$$产生规则  : (X → F−[[X]+X]+F[+FX]−X), (F → FF)$$
-$$角度参数  : 25°$$
-动作：</p>
-<ul>
-<li>F :向前画线 </li>
-<li>− :左转25°, </li>
-<li>+ :右转25°</li>
-<li>X :空动作，不做任何事（这个符号仅在生成语句过程中起作用）</li>
-<li>[ :保存当前位置和角度（实际上是压入一个堆栈中）</li>
-<li>] :恢复最近保存的位置和角度（相当于从堆栈顶取上次保存的位置和角度，并弹出栈顶）</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>效果图如下：<img src="Fractal-plant.jpg" alt="Fractal-plant"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>对于不同规则和结果，请在实验白板中尝试</p>
+<p>这个问题的模拟实际上揭示了Monte Carlo算法的最基本的原理，对于一个未知的量，如果可以通过构造一个更简单的随机过程，通过统计随机过程中得到的参数来估计目标量，如果对未知量的精度需求不高，那么这种算法可以有巨大的应用价值。实际上，Monte Carlo算法被评选了20世纪最伟大的算法，值得深入学习。</p>
 
 </div>
 </div>

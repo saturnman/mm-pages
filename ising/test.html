@@ -1,9 +1,21 @@
 <div>
     <div class="row">
-        <button class="btn btn-warning pull-right" ng-click="reload()">Reload</button>
+        <button class="btn btn-warning pull-right" ng-click="reload()">刷新</button>
+    </div>
+    <div class="row">
+        <div class="col-xs-2">
+            <label class="control-label" >温度</label>
+        </div>
+        <div class="col-xs-3">
+            <input type="text" ng-model="params.temperature" class="form-control" />
+        </div>
+        <div class="col-xs-2">
+            <button class="btn btn-success" ng-click="setTemperature()">设置</button>
+        </div>
     </div>
     <div class="row">
         <button class="btn btn-success" ng-click="start()">开始</button>
         <button class="btn btn-success" ng-click="stop()">停止</button>
+        <button class="btn btn-success" ng-click="continue()">继续</button>
     </div>
 </div>

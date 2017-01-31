@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>gameoflife</title>
+<title>IsingModel</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11751,16 +11751,8 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="&#29983;&#21629;&#28216;&#25103;">&#29983;&#21629;&#28216;&#25103;<a class="anchor-link" href="#&#29983;&#21629;&#28216;&#25103;">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>生命游戏是一种零玩家的游戏，主要是对自然种群内个体生长和死亡的一种简单模拟，世界被简单模拟为矩形框内的小格子，一个小格子称为一个元胞，它的8个相邻格子称为它的邻居，为了计算上的方法，小格子的上下边界和左右边界被连接起来，组成一个封闭的周期世界，世界上元胞的初始值为系统的初始条件，根据一定的规则进行演化。生命游戏虽然构造非常简单，但是不同的初始条件可以演化出一场复杂的系统行为，而且目前没有任何理论可以对这些行为在初始时进行预测。</p>
+<h1 id="Ising-&#27169;&#22411;(2D)">Ising &#27169;&#22411;(2D)<a class="anchor-link" href="#Ising-&#27169;&#22411;(2D)">&#182;</a></h1><p>Ising模型是依物理学家Ernst Ising命名，由Ernst Ising的导师提出的模型。Ising模型主要用来研究材料的铁磁性，铁磁物质分子或原子可以简化为存在一分子电流也就是相当于一个非常微小的磁针，每个磁针只有两种状态选择，向上或是向下，每个磁针只与它最近邻的磁针相互作用，以于2维的情况每个磁针有8个邻居。一般选择边界条件为周期边界条件，这样每个磁针都是等价的。</p>
+<p>Ising模型的系统主要参数是J，h和T,分别为两磁针同向时能量、外场强度（单个磁针在外场下的能量）和系统温度，本文不考虑此外场的作用，仅考虑磁针之间的相互作用且两磁针同向时，系统的能量更小，也就是更稳定。</p>
 
 </div>
 </div>
@@ -11770,20 +11762,15 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="&#20803;&#32990;&#28436;&#21270;&#26465;&#20214;&#65306;">&#20803;&#32990;&#28436;&#21270;&#26465;&#20214;&#65306;<a class="anchor-link" href="#&#20803;&#32990;&#28436;&#21270;&#26465;&#20214;&#65306;">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Monte-Carlo&#27169;&#25311;">Monte Carlo&#27169;&#25311;<a class="anchor-link" href="#Monte-Carlo&#27169;&#25311;">&#182;</a></h3><p>系统的总能量为$H(\sigma) = - J\sum_{\langle ij\rangle}\sigma_i \sigma_j -h\sum_{j}\sigma_j$</p>
+<p>对于没有外场h存在的情况下，系统总能量为$H(\sigma) = - J\sum_{\langle ij\rangle}\sigma_i \sigma_j$</p>
+<p>模拟过程如下：</p>
 <ol>
-<li>如果活着的元胞的活着的邻居小于2个，这个元胞下一个周期将死亡，这是模拟群体聚集数量过于稀疏的状况</li>
-<li>如果活着的元胞的活着的邻居为2个或3个，这个元胞下一下周期依旧保持生存，这是模拟正常的种群生存状态</li>
-<li>如果活着的元胞的活着的邻居大于3个，这个元胞下一个周期将死亡，这是模拟环境压力造成死亡的情况</li>
-<li>如果死的元胞活着的邻居刚好是3个，这个元胞下一下周期将变为活的状态，这个模拟了个体的繁殖</li>
+<li>随机初始化2D方格，选择一个系统温度T</li>
+<li>随机选择一个磁针，尝试翻转磁针方向</li>
+<li>计算翻转后系统能量变化$\Delta E$</li>
+<li>如果$\Delta E<0$，就确定这个翻转，重复步骤2</li>
+<li>如果$\Delta E>0$,就以概率$p^{acc}=e^{-\beta \Delta E}$接受这个翻转，其中$\beta = \frac{1}{k_B T}$</li>
 </ol>
 
 </div>
@@ -11794,7 +11781,9 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="&#31995;&#32479;&#34892;&#20026;&#65306;">&#31995;&#32479;&#34892;&#20026;&#65306;<a class="anchor-link" href="#&#31995;&#32479;&#34892;&#20026;&#65306;">&#182;</a></h3>
+<p>对于温度较低的情况，系统会先出现局部的磁畴，之后慢慢扩大致整个系统，形成单一形式的铁磁体。
+<img src="Ising_quench_b10.gif" alt="低温"></p>
+
 </div>
 </div>
 </div>
@@ -11803,25 +11792,21 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>生命游戏从诞生开始就引起了大量爱好者的关注，因为如此简单的游戏根据初始条件的不同居然可以演化出异常复杂的行为。同时也诞生了大量爱好者对特定初始条件的收集和特定模式的收集</p>
-<p>下面的模式被称为Gospers glider 手枪</p>
-<p><img src="Gospers_glider_gun.gif" alt="Gospers glider gun.gif"></p>
+<p>在温度较高的情况下，系统不会形成局部的磁畴，就算局部有磁畴出现很快也会被热运动破坏。这里就存在一个极限温度$T_c$,当温度$T>T_c$时，系统不会磁化，当温度$T<T_c$时，系统会磁化。这这个温度$T_c$就是相变温度，Ising模型是目前知道的存在想变行为的最简单的统计力学模型。</p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
 <div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span> 
-</pre></div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ising模型除研究系统相变行为之外，还可以研究单位温度变化系统稳定后能量变化，也就是系统在不同温度下比热的容的变化，在相变温度下，系统的比热趋向无穷大，下图是随温度变化系统能量和比热的变化。
+<img src="ising_e_cv.jpeg" alt="ising E Cv"></p>
 
 </div>
 </div>
-</div>
-
 </div>
     </div>
   </div>

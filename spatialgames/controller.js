@@ -62,19 +62,27 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
         return deferred.promise();
     };
 
+    $scope.reload = function () {
+        window.location.reload();
+    };
+
+    $scope.continue = function () {
+        $scope.slowProcessPainter.continue();
+    };
+
     $scope.demoSelectionChanged = function () {
         if($scope.params.demoSelection==0){
             $scope.slowProcessPainter.stop();
             $scope.slowProcessPainter.async = false;
             $scope.config("random").then(function () {
                 $scope.draw();
-                $scope.start();
+                $scope.slowProcessPainter.continue();
             });
         }else if($scope.params.demoSelection==1){
             $scope.slowProcessPainter.stop();
             $scope.slowProcessPainter.async = false;
             $scope.config("alld").then(function () {
-                $scope.patch(60,60,[[0,0],[0,0]]).then(function () {
+                $scope.patch(59,59,[[0,0,0],[0,0,0],[0,0,0]]).then(function () {
                     $scope.draw();
                     $scope.slowProcessPainter.continue();
                 });
@@ -83,7 +91,7 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
             $scope.slowProcessPainter.stop();
             $scope.slowProcessPainter.async = false;
             $scope.config("allc").then(function () {
-                $scope.patch(60,60,[[1,1],[1,1]]).then(function () {
+                $scope.patch(60,60,[[1,1,1],[1,1,1],[1,1,1]]).then(function () {
                     $scope.draw();
                     $scope.slowProcessPainter.continue();
                 });
@@ -112,7 +120,11 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
     };
 
     $scope.start = function () {
-        $scope.slowProcessPainter.start(120,120);
+        $scope.setup(120,120).then(function () {
+            //$scope.slowProcessPainter.start(120,120);
+            $scope.demoSelectionChanged();
+        });
+        //$scope.slowProcessPainter.start(120,120);
     };
 
     $scope.stop = function () {
@@ -150,13 +162,12 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
         });
     };
 
-    $scope.setup = function (width,height,temperature) {
+    $scope.setup = function (width,height) {
         var deferred = $.Deferred();
         var data = {
             'handlerName':'SpatialGame_setup',
             width:width,
-            height:height,
-            temperature:temperature
+            height:height
         };
         $scope.bridge.callHandler('RunPyFunction',data, function responseCallback(responseData) {
             console.log("JS received response:", responseData);
@@ -217,7 +228,6 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
                     //this.interval = ;
                     this.counter = 10000;
                     this.stopped = false;
-                    $scope.setup(width,height);
                     this.timer = setInterval(this.step, this.interval);
                 }
             },
@@ -230,6 +240,7 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
             },
             continue:function () {
                 if(this.timer==null) {
+                    this.counter = 10000;
                     this.stopped = false;
                     this.timer = setInterval(this.step, this.interval);
                 }

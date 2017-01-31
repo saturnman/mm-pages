@@ -30,11 +30,15 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
     };
 
     $scope.start = function () {
-        $scope.slowProcessPainter.start(500,500,20);
+        $scope.slowProcessPainter.start();
     };
 
     $scope.stop = function () {
         $scope.slowProcessPainter.stop();
+    };
+
+    $scope.continue = function () {
+        $scope.slowProcessPainter.continue();
     };
 
     $scope.step = function () {
