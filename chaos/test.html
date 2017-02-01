@@ -1,0 +1,31 @@
+<div>
+    <div class="row">
+        <button class="btn btn-warning pull-right" ng-click="reload()">刷新</button>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <label class="control-label col-md-2 col-xs-2 col-sm-2" for="r">常数r</label>
+            <input id="r" type="text" class="col-md-3 col-xs-3" ng-model="params.r">
+            <label class="control-label col-md-2 col-xs-2">初始值1</label>
+            <input id="x1start" type="text" class="col-md-3 col-xs-3" ng-model="params.x1start">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <label class="control-label col-md-2 col-xs-2" for="r">初始值2</label>
+            <input id="x2start" type="text" class="col-md-3 col-xs-3" ng-model="params.x2start">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <label class="control-label col-md-2 col-xs-2" for="lines">曲线数目</label>
+            <select id="lines" ng-options="v as v for v in [1,2]" ng-model="params.lines" class="col-md-3 col-xs-3"></select>
+            <label class="control-label col-md-2 col-xs-2" for="iter_count">迭代数</label>
+            <select id="iter_count" ng-options="v as v for v in [50,100,200,300]" ng-model="params.iter_count" class="col-md-3 col-xs-3"></select>
+        </div>
+    </div>
+    <div class="row">
+        <button class="btn btn-success" ng-click="drawline()">绘制迭代曲线</button>
+        <button class="btn btn-success" ng-click="ChaosModel_drawFibu()">绘制迭代分叉曲线</button>
+    </div>
+</div>

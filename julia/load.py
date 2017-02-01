@@ -11,9 +11,10 @@ class Julia:
     fractal = []
     c = []
     SIZE = 1000
-    MAX_COLOR = 255.
+    MAX_COLOR = 255.0
     ITERATIONS = 10
-    totalIter = 10
+    TOTAL_ITERATIONS = 1000
+    totalIter = 0
     @staticmethod
     def setup(x_min,x_max,y_min,y_max,c):
         x, y = nm.meshgrid(nm.linspace(x_min, x_max, 2 * Julia.SIZE), nm.linspace(y_min, y_max, Julia.SIZE));
@@ -50,20 +51,22 @@ class Julia:
         fig.clf()
     @staticmethod
     def improve():
-        if Julia.CPoint != 0+1j*0:
-            for n in range(Julia.ITERATIONS):
-                mask = nm.abs(Julia.z) <= 20
-                Julia.z[mask] = Julia.z[mask]**2+Julia.CPoint
-                Julia.fractal[(Julia.fractal==Julia.MAX_COLOR) & (~mask)] = (Julia.MAX_COLOR-1)*(Julia.totalIter-Julia.ITERATIONS+n)/(Julia.totalIter)
-        else:
-            for n in range(Julia.ITERATIONS):
-                mask = nm.abs(Julia.z) <= 20
-                Julia.z[mask] = Julia.z[mask] ** 2 + Julia.c[mask]
-                Julia.fractal[(Julia.fractal == Julia.MAX_COLOR) & (~mask)] = (Julia.MAX_COLOR - 1) * (
-                Julia.totalIter - Julia.ITERATIONS + n) / (Julia.totalIter)
-        Julia.totalIter += Julia.ITERATIONS
+
+        if Julia.totalIter < Julia.TOTAL_ITERATIONS:
+            if Julia.CPoint != 0+1j*0:
+                for n in range(Julia.ITERATIONS):
+                    mask = nm.abs(Julia.z) <= 10
+                    Julia.z[mask] = Julia.z[mask]**2+Julia.CPoint
+                    Julia.fractal[(Julia.fractal==Julia.MAX_COLOR) & (~mask)] = (Julia.MAX_COLOR-1)*(Julia.totalIter+n)/(Julia.TOTAL_ITERATIONS)
+            else:
+                for n in range(Julia.ITERATIONS):
+                    mask = nm.abs(Julia.z) <= 10
+                    Julia.z[mask] = Julia.z[mask] ** 2 + Julia.c[mask]
+                    Julia.fractal[(Julia.fractal == Julia.MAX_COLOR) & (~mask)] = (Julia.MAX_COLOR - 1) * (
+                    Julia.totalIter + n) / (Julia.TOTAL_ITERATIONS)
+            Julia.totalIter += Julia.ITERATIONS
+
 def Julia_draw(data):
-    print data
     Julia.draw()
 
 def Julia_improve(data):

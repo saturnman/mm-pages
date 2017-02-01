@@ -16,7 +16,7 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
         setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
     };
 
-    $scope.rangeSelList = [0,1];
+    $scope.rangeSelList = [0,1,2];
     $scope.rangeSelChange = function () {
         selList = $scope.drawRangeList[$scope.params.rangeSel];
         $scope.params.x_min = selList[0];
@@ -39,6 +39,7 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
     //draw range
     $scope.drawRangeList = [
         [-1.5,1,5,-1.5,1.5],
+        [-2.0,2.0,-1.5,1.5],
         [-0.748766715922161, -0.748766705771757, 0.123640844894862, 0.123640851045266]
     ];
 
