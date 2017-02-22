@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>LSystemDoc</title>
+<title>AntColonyTSP</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -11751,8 +11751,16 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="L-System">L-System<a class="anchor-link" href="#L-System">&#182;</a></h1><p>L-System是植物学家Aristid Lindenmayer发明的一种形式化的产生式系统，系统最初用来模拟和研究植物的生长形态。Lindenmayer发现很多植物形态都有类似自相似的特征，比如树木的形态，如下图：<img src="Fractal_weeds.jpg" alt="tree">
-因此Lindenmayer认为可以把植物的生长过程认为是一个局部依赖一组固定的规则，之后从一个点逐渐生长而成，因此发明了L演算系统。</p>
+<h1 id="&#34433;&#32676;&#31639;&#27861;&#35299;TSP&#38382;&#39064;">&#34433;&#32676;&#31639;&#27861;&#35299;TSP&#38382;&#39064;<a class="anchor-link" href="#&#34433;&#32676;&#31639;&#27861;&#35299;TSP&#38382;&#39064;">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="TSP&#38382;&#39064;">TSP&#38382;&#39064;<a class="anchor-link" href="#TSP&#38382;&#39064;">&#182;</a></h3><p>TSP问题(旅行商问题)本身描述比较简单也比较古老，问题描述如下："给定n个城市和城市之间的距离，请找出途径所有城市一次且仅一次并回到原点的最短路径“。TSP问题属于计算机计算复杂性里的NP-hard问题，这里不展开介绍NP-hard的具体含义，简单理解TSP问题的特性就是当城市数量比较多时不存在快速解决此问题的算法。然而这个问题有很强的实际应用背景，很多人们遇到难以解决的复杂组合优化问题最终都殊途同归，基本上都会转化为TSP问题。所以如果能找到解决此问题的近似算法，尽管条件可以适当放宽也是有巨大的应用价值的，而实际应用场景下人们并不需要一定非要找到最短的回路，找到一条足够短的最优近似解就足够好了。而且统计表明这类问题很多启发式算法一般情况下近似最优解与最优解之间的差距都在1%以下，找到有效的近似算法非常重要。</p>
 
 </div>
 </div>
@@ -11762,30 +11770,23 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>L系统于一组变换规则和一个初始语句来不断产生新的语句。虽然听起来复杂，实际操作却非常简单，比如下面的例子：
-$$字母表符号集合 : {A B}$$
-$$常量 : \Phi(空集)$$
-$$初始语句  : A$$
-$$规则  : (A → AB), (B → A)$$
-通过7步的初始演算，就得到下面的结果：</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="&#34433;&#32676;&#31639;&#27861;">&#34433;&#32676;&#31639;&#27861;<a class="anchor-link" href="#&#34433;&#32676;&#31639;&#27861;">&#182;</a></h3><p>蚁群算法是仿生算法中群体智能算法的一种，最早由Marco Dorigo于1992年在其博士论文中提出。算法模拟了蚂蚁种群在环境中搜索食物来源的过程。</p>
+<p>在蚂蚁群体在搜索食物源时有如下特征：</p>
 <ul>
-<li>n = 0 : A</li>
-<li>n = 1 : AB</li>
-<li>n = 2 : ABA</li>
-<li>n = 3 : ABAAB</li>
-<li>n = 4 : ABAABABA</li>
-<li>n = 5 : ABAABABAABAAB</li>
-<li>n = 6 : ABAABABAABAABABAABABA</li>
-<li>n = 7 : ABAABABAABAABABAABABAABAABABAABAAB</li>
+<li>最初所有的蚂蚁个体都随机闲逛，碰运气搜索食物</li>
+<li>在蚂蚁搜索到食物时，蚂蚁会返回巢穴通知其它蚂蚁前来食用或是运回蚁穴，为了标记食物，蚂蚁会沿路释放化学类物质信息素标记路径，当路径较长时蚂蚁平均释放信息素就少，反之路径较短时释放信息素就多</li>
+<li>其它蚂蚁在之后搜索食物过程中并不一定严格沿着信息素路径前进，而是随机游走的同时增大沿着信息素路径的概率（这样可以让蚂蚁减少陷入局部最优状态的可能性）。在找到食物返回时还会沿途留下信息素</li>
+<li>信息素随着时间推移会慢慢挥发，所以有大量蚂蚁行走释放信息素的路径才能保留一定的信息素浓度，而其它少有蚂蚁走过的路径会因挥发残留很小的信息素</li>
+<li>经地一段时间之后，大量蚂蚁就用信息素搭建出了少数几条通向食物源的较短路径</li>
+</ul>
+<h3 id="&#34433;&#32676;&#31639;&#27861;&#23545;TSP&#38382;&#39064;&#23454;&#29616;">&#34433;&#32676;&#31639;&#27861;&#23545;TSP&#38382;&#39064;&#23454;&#29616;<a class="anchor-link" href="#&#34433;&#32676;&#31639;&#27861;&#23545;TSP&#38382;&#39064;&#23454;&#29616;">&#182;</a></h3><p>蚁群算法的实现针对各种问题会有不同的修正，不必严格按照蚂蚁搜索食物的过程，算法同样有效。针对TSP问题，算法主要有以下几点设计：</p>
+<ul>
+<li>每个蚂蚁必须途经每个城市一次且仅一次</li>
+<li>在每个城市蚂蚁趋向于选择附近的城市做为下一个途经的城市</li>
+<li>每个蚂蚁趋向于选择有更多信息素的路径</li>
+<li>每个蚂蚁浏览所有城市后留下与路径长度成负相关的的信息素(本例中选择与$\frac{1}{l^{2}}$成正比)</li>
+<li>每个浏览步骤之后，信息素会挥发一定比例
+<img src="Aco_TSP.svg.png" alt="Aco_TSP.svg"></li>
 </ul>
 
 </div>
@@ -11796,52 +11797,14 @@ $$规则  : (A → AB), (B → A)$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>注意到每行的符号数量 1，2，3，5，8，13，21，34，这正是斐波那契数量的结果，如果使用更加复杂的生产规则，那么当然可以产生更加多样的语句。</p>
-<p>现在问题来了，这种语句和植物形态有什么关系呢？可以把生成的语句中的每个字母绑定一个动作，这样一条语句就成为了一个动作序列，如果这些动作序列是一系列的绘图动作，那么就会绘制出相应的图形。</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>植物图形示例：
-$$字母表 : X F$$
-$$常量 : + − [ ]$$
-$$初始  : X$$
-$$产生规则  : (X → F−[[X]+X]+F[+FX]−X), (F → FF)$$
-$$角度参数  : 25°$$
-动作：</p>
-<ul>
-<li>F :向前画线 </li>
-<li>− :左转25°, </li>
-<li>+ :右转25°</li>
-<li>X :空动作，不做任何事（这个符号仅在生成语句过程中起作用）</li>
-<li>[ :保存当前位置和角度（实际上是压入一个堆栈中）</li>
-<li>] :恢复最近保存的位置和角度（相当于从堆栈顶取上次保存的位置和角度，并弹出栈顶）</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>效果图如下：<img src="Fractal-plant.jpg" alt="Fractal-plant"></p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>对于不同规则和结果，请在实验白板中尝试</p>
+<h3 id="&#31639;&#27861;&#28436;&#31034;">&#31639;&#27861;&#28436;&#31034;<a class="anchor-link" href="#&#31639;&#27861;&#28436;&#31034;">&#182;</a></h3><p>可视化效果如下，路径使用红色标记，信息素使用绿色标记,为了简便，初始化时所有路径都预先放置了同样的信息素，随着时间推移，信息素随着扩散而逐渐变淡，但是有的常走路径却积累出大量的信息素。
+<img src="acs1.jpeg" alt="acs1.jpeg">
+<img src="acs2.jpeg" alt="acs2.jpeg">
+<img src="acs3.jpeg" alt="acs3.jpeg">
+很多路径的信息素已经挥发完毕，只剩下常走路径的信息素
+<img src="acs4.jpeg" alt="acs4.jpeg">
+<img src="acs5.jpeg" alt="acs5.jpeg">
+优化完毕，现在被红色路径覆盖的路径下方有大量的信息素，这些信息素完全确定了蚂蚁走的最终路径</p>
 
 </div>
 </div>

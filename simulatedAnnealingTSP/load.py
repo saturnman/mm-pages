@@ -96,7 +96,7 @@ class SimulatedAnnealingTSP:
             ax.scatter(x[0],x[1],s=10,c="#ff0000",alpha=0.8)
         totalLength = SimulatedAnnealingTSP.getTotalLength()
         desp_patch = mpatches.Patch(color='red',
-                                    label="temperatur:%f,length=%f" % (SimulatedAnnealingTSP.temperature,totalLength))
+                                    label="temperature:%f,length=%f" % (SimulatedAnnealingTSP.temperature,totalLength))
         # draw_Barnsley(ax)
         ax.legend(handles=[desp_patch])
         ax.axis("equal")
