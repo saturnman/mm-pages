@@ -5,6 +5,7 @@ matplotlib.use("agg")
 import matplotlib.pyplot as plt
 import _pybridge
 from matplotlib import collections
+from matplotlib import gridspec
 from random import shuffle
 import matplotlib.patches as mpatches
 
@@ -68,12 +69,13 @@ class GeneticTSP:
     pointList = []
     lineList = []
     pointSeqList = []
-    width = 800
+    width = 1000
     height = 800
-    numPoints = 50
+    numPoints = 30
     numAgents = 30
     agentList = []
     generation = 0
+    top5AgentArray = None
     @staticmethod
     def setup():
         #init
@@ -146,10 +148,39 @@ class GeneticTSP:
         fig = plt.gcf()
         fig.clf()
         fig.patch.set_facecolor("w")
+        gs = gridspec.GridSpec(1, 2, width_ratios=[2, 4])
         DPI = fig.get_dpi()
-        fig.set_size_inches(800.0/float(DPI),600.0/float(DPI))
+        fig.set_size_inches(GeneticTSP.width/float(DPI),GeneticTSP.height/float(DPI))
         plt.axis('off')
-        ax = fig.add_subplot(111)
+        plt.tight_layout(pad=0)
+        #ax = fig.add_subplot(111)
+        ax1 = plt.subplot(gs[0])
+        top5AgentList = []
+        for i in range(5):
+            citySeq = GeneticTSP.agentList[i].citySequence
+            citySeqFix = []
+            zeroIndex = citySeq.index(0)
+            for _ in range(GeneticTSP.numPoints):
+                citySeqFix.append(citySeq[zeroIndex])
+                zeroIndex = (zeroIndex + 1)%GeneticTSP.numPoints
+            top5AgentList.append(citySeqFix)
+        top5AgentArray = nm.array(top5AgentList)
+        top5AgentArray = nm.transpose(top5AgentArray)
+
+        table = ax1.table(cellText=top5AgentArray, cellLoc='center', bbox=[0, 0, 1, 1])
+        table.set_fontsize(18)
+
+        if GeneticTSP.top5AgentArray is None:
+            GeneticTSP.top5AgentArray = top5AgentArray
+        else:
+            for key, c in table.get_celld().iteritems():
+                if GeneticTSP.top5AgentArray[key] != top5AgentArray[key]:
+                    c.set(facecolor='#00ff00')
+                if key[0]==0:
+                    c.set(facecolor='#ff0000')
+            GeneticTSP.top5AgentArray = top5AgentArray
+        ax1.set_axis_off()
+        ax = plt.subplot(gs[1])
         ax.add_collection(linecollections, autolim=True)
 
         for x in GeneticTSP.pointList:

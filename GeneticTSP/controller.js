@@ -170,7 +170,7 @@ var TestModelController = mathModelApp.controller("TestModelController",['$locat
 
         $scope.slowProcessPainter = {
             stopped:true,
-            interval:500,
+            interval:2000,
             counter:0,
             async:false,
             timer:null,
