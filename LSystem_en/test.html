@@ -1,0 +1,23 @@
+<div>
+    <div class="row">
+        <button class="btn btn-warning pull-right" ng-click="reload()">Refresh</button>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <label class="control-label col-md-2 col-xs-2" for="exampleSel">Test setup</label>
+            <select id="exampleSel" ng-options="v.value as v.title for v in configList" ng-model="params.exampleSel" class="col-md-3 col-xs-3"></select>
+        </div>
+    </div>
+    <div class="row">
+<pre>
+Start:S
+Rules:{{ruleDespList[params.exampleSel].rule}}
+Iterations:{{ruleDespList[params.exampleSel].iter}}
+Draw direction:{{ruleDespList[params.exampleSel].angle}}
+Angle:{{ruleDespList[params.exampleSel].angle}}</pre>
+
+    </div>
+    <div class="row">
+        <button class="btn btn-success" ng-click="drawSystem()">Draw</button>
+    </div>
+</div>
