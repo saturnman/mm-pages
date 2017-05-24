@@ -1,0 +1,23 @@
+<div>
+    <div class="row">
+        <button class="btn btn-warning pull-right" ng-click="reload()">Refresh</button>
+    </div>
+    <div class="row">
+        <label class="control-label col-xs-2">e.p list</label>
+        <div class="col-xs-3"></div>
+            <select ng-options="v.value as v.name for v in demoList" ng-model="params.demoSelection" ng-change="demoSelectionChanged()"></select>
+        </div>
+    </div>
+    <div class="row">
+        <label class="control-label col-xs-2">b value</label>
+        <div class="col-xs-3">
+            <input type="text" ng-model="params.b" class="form-control">
+        </div>
+        <button class="btn btn-success" class="col-xs-2" ng-click="setb()">Set b</button>
+    </div>
+    <div class="row">
+        <button class="btn btn-success" ng-click="start()">Start</button>
+        <button class="btn btn-success" ng-click="stop()">Stop</button>
+        <button class="btn btn-success" ng-click="continue()">Continue</button>
+    </div>
+</div>
