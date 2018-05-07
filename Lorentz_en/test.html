@@ -1,0 +1,25 @@
+<div>
+    <div class="row">
+        <button class="btn btn-warning pull-right" ng-click="reload()">刷新</button>
+    </div>
+    <div class="row">
+        <button class="btn btn-success" ng-click="start()">开始</button>
+        <button class="btn btn-success" ng-click="continue()">继续</button>
+        <button class="btn btn-success" ng-click="stop()">停止</button>
+    </div>
+    <div class="row">
+        <label class="control-label col-xs-2">ρ值</label>
+        <div class="col-xs-3">
+            <input type="text" ng-model="params.rho" class="form-control">
+        </div>
+        <label class="control-label col-xs-2">β值</label>
+        <div class="col-xs-3">
+            <input type="text" ng-model="params.beta" class="form-control">
+        </div>
+        <label class="control-label col-xs-2">σ值</label>
+        <div class="col-xs-3">
+            <input type="text" ng-model="params.sigma" class="form-control">
+        </div>
+        <button class="btn btn-success" class="col-xs-2" ng-click="setParams()">设置</button>
+    </div>
+</div>

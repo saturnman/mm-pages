@@ -14,7 +14,6 @@ class Lorentz_System(object):
     @staticmethod
     def _setup(data):
         Lorentz_System.instance = Lorentz_System()
-        Lorentz_System.instance.init_draw()
 
     @staticmethod
     def _draw(data):
@@ -35,12 +34,10 @@ class Lorentz_System(object):
         Lorentz_System.instance.rho = rho
         Lorentz_System.instance.sigma = sigma
         Lorentz_System.beta = beta
-        Lorentz_System.instance.init_draw()
 
 
     def __init__(self):
         N_trajectories = 20
-        self.fig = None
         self.rho = 28.0
         self.beta = 8.0/3
         self.sigma = 10.0
@@ -64,16 +61,14 @@ class Lorentz_System(object):
 
         # model run step
         self.steps = 1
-        self.init_draw()
         self.draw()
 
     def step(self):
         self.steps += 2
         self.steps %= (self.steps + 2) % self.x_t.shape[1]
 
-    def init_draw(self):
-        if self.fig is not None:
-            self.fig.clf()
+    def draw(self):
+        # Set up figure & 3D axis for animation
         self.fig = plt.gcf()
         self.fig.patch.set_facecolor("w")
         DPI = self.fig.get_dpi()
@@ -97,9 +92,6 @@ class Lorentz_System(object):
         self.ax.set_ylim((-35, 35))
         self.ax.set_zlim((0, 60))
 
-
-    def draw(self):
-
         # set point-of-view: specified by (altitude degrees, azimuth degrees)
         self.ax.view_init(30, 0.3 * self.steps)
         for line, pt, xi in zip(self.lines, self.pts, self.x_t):
@@ -112,7 +104,7 @@ class Lorentz_System(object):
 
         self.fig.canvas.draw()
         _pybridge.PyRendererAggBufferRGBA(self.fig.canvas.get_renderer()._renderer)
-        #self.fig.clf()
+        self.fig.clf()
 
     @staticmethod
     def lorentz_deriv_dt((x, y, z), dt, sigma=10., beta=8. / 3, rho=28.0):
